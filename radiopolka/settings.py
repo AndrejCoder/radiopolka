@@ -25,7 +25,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'o1!%zvuy-dzn7q9(b$g&hix+0mnfo9el0!+&y40$(^5_*8d8+s'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = conf.DEBUG
 
 ALLOWED_HOSTS = []
 
@@ -39,6 +39,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django_extensions',
+    'core',
+    'version'
 ]
 
 MIDDLEWARE = [
@@ -55,6 +58,14 @@ ROOT_URLCONF = 'radiopolka.urls'
 
 TEMPLATES = [
     {
+        'NAME': 'jinja2',
+        'BACKEND': 'django.template.backends.jinja2.Jinja2',
+        'DIRS': [os.path.join(BASE_DIR, 'templates/jinja2')],
+        'APP_DIRS': True,
+        'OPTIONS': {'environment': 'core.jinja2.environment'},
+    },
+    {
+        'NAME': 'django',
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [],
         'APP_DIRS': True,

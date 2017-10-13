@@ -1,2 +1,5 @@
 Django==2.0a1
 psycopg2
+jinja2
+django-mptt
+django-extensions
