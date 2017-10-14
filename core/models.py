@@ -1,4 +1,6 @@
-from django.db.models import ForeignKey, SlugField, CharField, CASCADE, Model, IntegerField, TextField
+from ckeditor.fields import RichTextField
+from django.db.models import ForeignKey, SlugField, CharField, CASCADE, Model, IntegerField, TextField, FileField, \
+    DateTimeField, ManyToManyField
 from mptt.models import MPTTModel
 
 
@@ -10,6 +12,9 @@ class Category(MPTTModel):
     class Meta:
         verbose_name = 'Категория'
         verbose_name_plural = 'Категории'
+
+    def __str__(self):
+        return '{0}'.format(self.name)
 
 
 class Author(Model):
@@ -32,6 +37,9 @@ class Publisher(Model):
         verbose_name = 'Издательство'
         verbose_name_plural = 'Издательства'
 
+    def __str__(self):
+        return '{0}'.format(self.name)
+
 
 class Language(Model):
     slug = SlugField(verbose_name='Код языка издания', primary_key=True)
@@ -40,6 +48,9 @@ class Language(Model):
     class Meta:
         verbose_name = 'Язык издания'
         verbose_name_plural = 'Языки изданий'
+
+    def __str__(self):
+        return '{0}'.format(self.name)
 
 
 class Type(Model):
@@ -50,12 +61,19 @@ class Type(Model):
         verbose_name = 'Тип издания'
         verbose_name_plural = 'Типы изданий'
 
+    def __str__(self):
+        return '{0}'.format(self.name)
+
 
 class Book(Model):
     slug = SlugField(verbose_name='Код книги')
     name = CharField(verbose_name='Название книги', max_length=255)
+    origin_name = CharField(verbose_name='Оригинальное название книги', max_length=255, blank=True, null=True)
+    isbn = CharField(verbose_name='ISBN', max_length=25)
+    isbn2 = CharField(verbose_name='ISBN2', max_length=25, blank=True, null=True)
+    series = CharField(verbose_name='Серия', max_length=255, blank=True, null=True)
     category = ForeignKey(to=Category, verbose_name='Категория', on_delete=CASCADE, related_name='category_books')
-    author = ForeignKey(to=Author, verbose_name='Автор', on_delete=CASCADE, related_name='author_books')
+    author = ManyToManyField(to=Author, verbose_name='Автор', related_name='author_books')
     format = CharField(verbose_name='Формат издания', max_length=100, blank=True, null=True)
     pages = IntegerField(verbose_name='Количество страниц')
     year = IntegerField(verbose_name='Год издания')
@@ -65,12 +83,16 @@ class Book(Model):
     type = ForeignKey(to=Type, verbose_name='Тип издания', on_delete=CASCADE, related_name='type_books', blank=True,
                       null=True)
     weight = IntegerField(verbose_name='Вес')
-    description_big = TextField(verbose_name='Описание (полное)')
-    description_small = TextField(verbose_name='Описание короткое')
+    description_big = RichTextField(verbose_name='Описание (полное)')
+    description_small = RichTextField(verbose_name='Описание (короткое)')
+    file = FileField(verbose_name='Файл книги', upload_to='books/')
+    created_date = DateTimeField(verbose_name='Дата добавления', auto_created=True)
+    paper_url = CharField(verbose_name='Ссылка на бумажную версию', max_length=255, blank=True, null=True)
+    content = RichTextField(verbose_name='Содержание')
 
     class Meta:
         verbose_name = 'Книга'
         verbose_name_plural = 'Книги'
 
     def __str__(self):
-        return '{0} - {1}'.format(self.author, self.name)
+        return '{0} - {1}'.format(', '.join(self.author.all().values_list('name', flat=True)), self.name)

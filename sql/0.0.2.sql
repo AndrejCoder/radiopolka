@@ -80,47 +80,47 @@ BEGIN;
 
     CREATE TABLE core_book
     (
-      id                SERIAL       NOT NULL
+      created_date      TIMESTAMP WITH TIME ZONE NOT NULL,
+      id                SERIAL                   NOT NULL
         CONSTRAINT core_book_pkey
         PRIMARY KEY,
-      slug              VARCHAR(50)  NOT NULL,
-      name              VARCHAR(255) NOT NULL,
+      slug              VARCHAR(50)              NOT NULL,
+      name              VARCHAR(255)             NOT NULL,
       format            VARCHAR(100),
-      pages             INTEGER      NOT NULL,
-      year              INTEGER      NOT NULL,
-      cover             VARCHAR(100) NOT NULL,
-      weight            INTEGER      NOT NULL,
-      description_big   TEXT         NOT NULL,
-      description_small TEXT         NOT NULL,
-      author_id         VARCHAR(50)  NOT NULL
-        CONSTRAINT core_book_author_id_0bd1ce68_fk_core_author_slug
-        REFERENCES core_author
-          DEFERRABLE INITIALLY DEFERRED,
-      category_id       VARCHAR(50)  NOT NULL
+      pages             INTEGER                  NOT NULL,
+      year              INTEGER                  NOT NULL,
+      cover             VARCHAR(100)             NOT NULL,
+      weight            INTEGER                  NOT NULL,
+      description_big   TEXT                     NOT NULL,
+      description_small TEXT                     NOT NULL,
+      file              VARCHAR(100)             NOT NULL,
+      category_id       VARCHAR(50)              NOT NULL
         CONSTRAINT core_book_category_id_cea0e710_fk_core_category_slug
         REFERENCES core_category
           DEFERRABLE INITIALLY DEFERRED,
-      language_id       VARCHAR(50)  NOT NULL
+      language_id       VARCHAR(50)              NOT NULL
         CONSTRAINT core_book_language_id_c81361ae_fk_core_language_slug
         REFERENCES core_language
           DEFERRABLE INITIALLY DEFERRED,
-      publisher_id      VARCHAR(50)  NOT NULL
+      publisher_id      VARCHAR(50)              NOT NULL
         CONSTRAINT core_book_publisher_id_b9885380_fk_core_publisher_slug
         REFERENCES core_publisher
           DEFERRABLE INITIALLY DEFERRED,
       type_id           VARCHAR(50)
         CONSTRAINT core_book_type_id_ec284f44_fk_core_type_slug
         REFERENCES core_type
-          DEFERRABLE INITIALLY DEFERRED
+          DEFERRABLE INITIALLY DEFERRED,
+      isbn              VARCHAR(25)              NOT NULL,
+      isbn2             VARCHAR(25),
+      origin_name       VARCHAR(255),
+      series            VARCHAR(255),
+      paper_url         VARCHAR(255),
+      content           TEXT                     NOT NULL
     );
     CREATE INDEX core_book_slug_d62cdd35
       ON core_book (slug);
     CREATE INDEX core_book_slug_d62cdd35_like
       ON core_book (slug);
-    CREATE INDEX core_book_author_id_0bd1ce68
-      ON core_book (author_id);
-    CREATE INDEX core_book_author_id_0bd1ce68_like
-      ON core_book (author_id);
     CREATE INDEX core_book_category_id_cea0e710
       ON core_book (category_id);
     CREATE INDEX core_book_category_id_cea0e710_like
@@ -137,6 +137,29 @@ BEGIN;
       ON core_book (type_id);
     CREATE INDEX core_book_type_id_ec284f44_like
       ON core_book (type_id);
+
+    CREATE TABLE core_book_author
+    (
+      id        SERIAL      NOT NULL
+        CONSTRAINT core_book_author_pkey
+        PRIMARY KEY,
+      book_id   INTEGER     NOT NULL
+        CONSTRAINT core_book_author_book_id_bc90460a_fk_core_book_id
+        REFERENCES core_book
+          DEFERRABLE INITIALLY DEFERRED,
+      author_id VARCHAR(50) NOT NULL
+        CONSTRAINT core_book_author_author_id_ada6e686_fk_core_author_slug
+        REFERENCES core_author
+          DEFERRABLE INITIALLY DEFERRED,
+      CONSTRAINT core_book_author_book_id_author_id_551c1494_uniq
+      UNIQUE (book_id, author_id)
+    );
+    CREATE INDEX core_book_author_book_id_bc90460a
+      ON core_book_author (book_id);
+    CREATE INDEX core_book_author_author_id_ada6e686
+      ON core_book_author (author_id);
+    CREATE INDEX core_book_author_author_id_ada6e686_like
+      ON core_book_author (author_id);
 
     CREATE TABLE version_version
     (

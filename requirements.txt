@@ -3,3 +3,5 @@ psycopg2
 jinja2
 django-mptt
 django-extensions
+django-ckeditor
+image

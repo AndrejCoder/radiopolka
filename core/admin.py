@@ -1,4 +1,5 @@
 from django.contrib import admin
+from django.utils.safestring import mark_safe
 
 from .models import Category, Author, Publisher, Language, Type, Book
 
@@ -34,9 +35,14 @@ class TypeAdmin(admin.ModelAdmin):
 
 
 class BookAdmin(admin.ModelAdmin):
-    list_display = ['name', 'author', 'category', 'publisher']
+    list_display = ['name', 'author_list', 'category', 'publisher']
     search_fields = ['name', 'author__name', 'category__name', 'publisher__name']
     list_per_page = 50
+
+    def author_list(self, obj):
+        return mark_safe("<br/>".join(obj.author.all().values_list('name', flat=True)))
+
+    author_list.short_description = 'Авторы'
 
 
 admin.site.register(Category, CategoryAdmin)
