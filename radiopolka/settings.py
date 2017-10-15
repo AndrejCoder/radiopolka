@@ -81,6 +81,13 @@ TEMPLATES = [
     },
 ]
 
+THEME_NAME = getattr(conf, 'THEME_NAME', 'default')
+
+THEME_IMAGE_URL = "images/themes/{0}/".format(THEME_NAME)
+THEME_STYLESHEET_URL = "stylesheet/themes/{0}/".format(THEME_NAME)
+THEME_JAVASCRIPT_URL = "javascript/themes/{0}/".format(THEME_NAME)
+
+
 WSGI_APPLICATION = 'radiopolka.wsgi.application'
 
 
@@ -129,6 +136,18 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 STATIC_ROOT = getattr(conf, 'STATIC_ROOT', os.path.join(BASE_DIR, os.pardir, 'static'))
+
+STATICFILES_FINDERS = (
+    'django.contrib.staticfiles.finders.FileSystemFinder',
+    'django.contrib.staticfiles.finders.AppDirectoriesFinder'
+)
+
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, 'common_static'),
+)
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = '{0}{1}'.format(BASE_DIR, MEDIA_URL)
 
 CKEDITOR_UPLOAD_PATH = 'media/ckeditor'
 

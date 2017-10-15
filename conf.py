@@ -10,3 +10,6 @@ DATABASES = {
         'PORT': '',
     }
 }
+
+
+THEME_NAME = 'book_store'
