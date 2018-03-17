@@ -1,7 +1,8 @@
-Django==2.0a1
+Django
 psycopg2
 jinja2
 django-mptt
 django-extensions
 django-ckeditor
 image
+pip
