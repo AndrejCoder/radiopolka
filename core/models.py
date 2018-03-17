@@ -83,8 +83,8 @@ class Book(Model):
     type = ForeignKey(to=Type, verbose_name='Тип издания', on_delete=CASCADE, related_name='type_books', blank=True,
                       null=True)
     weight = IntegerField(verbose_name='Вес')
-    description_big = RichTextField(verbose_name='Описание (полное)')
     description_small = RichTextField(verbose_name='Описание (короткое)')
+    description_big = RichTextField(verbose_name='Описание (полное)')
     file = FileField(verbose_name='Файл книги', upload_to='books/')
     created_date = DateTimeField(verbose_name='Дата добавления', auto_created=True)
     paper_url = CharField(verbose_name='Ссылка на бумажную версию', max_length=255, blank=True, null=True)
