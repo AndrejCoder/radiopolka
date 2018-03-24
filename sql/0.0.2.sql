@@ -84,7 +84,7 @@ BEGIN;
       id                SERIAL                   NOT NULL
         CONSTRAINT core_book_pkey
         PRIMARY KEY,
-      slug              VARCHAR(50)              NOT NULL,
+      slug              VARCHAR(50)              NOT NULL UNIQUE,
       name              VARCHAR(255)             NOT NULL,
       format            VARCHAR(100),
       pages             INTEGER                  NOT NULL,
