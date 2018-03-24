@@ -12,4 +12,4 @@ DATABASES = {
 }
 
 
-THEME_NAME = 'old_book'
+THEME_NAME = 'book_store'
