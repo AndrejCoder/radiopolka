@@ -23,7 +23,9 @@ from core.views import IndexView
 urlpatterns = [
     path('admin/', admin.site.urls),
     url(r'^$', IndexView.as_view(), name='index'),
-    url(r'^ckeditor/', include('ckeditor_uploader.urls'))
+    url(r'^ckeditor/', include('ckeditor_uploader.urls')),
+    url(r'^category/', include('core.category_urls'), name='category'),
+    url(r'^book/', include('core.book_urls'), name='book')
 ]
 
 admin.site.site_header = settings.ADMIN_SITE_HEADER

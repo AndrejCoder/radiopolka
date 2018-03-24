@@ -1,75 +1,51 @@
 {% extends 'themes/book_store/base.html' %}
 
 {% block left_content %}
-    <div class="title"><span class="title_icon"><img src="{{ static([image_url, 'bullet1.gif']|join) }}" alt=""
-                                                             title=""/></span>Перечень книг
+    <div class="title">
+        <span class="title_icon">
+            <img src="{{ static([theme_image_url, 'bullet1.gif']|join) }}" alt="" title=""/>
+        </span>
+        Перечень книг
+    </div>
+    {% for book in book_list %}
+        <div class="feat_prod_box">
+            <div class="prod_title">
+                <a href="{{ url('book-detail', args=[book.slug]) }}" style="text-decoration: none;">
+                    {{ book.name }}
+                </a>
             </div>
-            <div class="feat_prod_box">
-                <div class="prod_img"><a href="details.html"><img src="{{ static([image_url, 'prod1.gif']|join) }}"
-                                                                  alt="" title="" border="0"/></a></div>
-                <div class="prod_det_box">
-                    <div class="box_top"></div>
-                    <div class="box_center">
-                        <div class="prod_title">Product name</div>
-                        <p class="details">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-                            tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
-                            exercitation.</p>
-                        <a href="details.html" class="more">- more details -</a>
-                        <div class="clear"></div>
-                    </div>
-
-                    <div class="box_bottom"></div>
+            <div class="prod_img">
+                <a href="{{ url('book-detail', args=[book.slug]) }}">
+                    <img src="{{ static([image_url, 'books/', book.id, '_middle.jpg']|join) }}" alt="" title=""
+                         border="1"/>
+                </a><br/><br/>
+                <div style="text-align: left; font-size: 9px;">
+                    <strong>Страниц:</strong> {{ book.pages }}<br/>
+                    <strong>Вес:</strong> {{ book.weight }} г.<br/>
+                    <strong>Язык:</strong> {{ book.language }}<br/>
+                    <strong>Переплёт:</strong> {{ book.cover }}<br/>
+                    <strong>ISBN:</strong> {{ book.isbn }}<br/>
                 </div>
-                <div class="clear"></div>
             </div>
-            <div class="feat_prod_box">
-                <div class="prod_img"><a href="details.html"><img src="{{ static([image_url, 'prod2.gif']|join) }}"
-                                                                  alt="" title="" border="0"/></a></div>
-                <div class="prod_det_box">
-                    <div class="box_top"></div>
-                    <div class="box_center">
-                        <div class="prod_title">Product name</div>
-                        <p class="details">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-                            tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
-                            exercitation.</p>
-                        <a href="details.html" class="more">- more details -</a>
-                        <div class="clear"></div>
+            <div class="prod_det_box">
+                <div class="box_top"></div>
+                <div class="box_center">
+                    <div class="details">
+                        <strong>Автор:</strong> {{ book.author_str }}<br/>
+                        <strong>Год издания:</strong> {{ book.year }}<br/>
+                        <strong>Издательство:</strong> {{ book.publisher.name }}<br/>
+                        <strong>Оригин. название:</strong> {{ book.origin_name }}<br/>
+                        <hr/>
+                        {{ book.description_small|safe }}
                     </div>
-                    <div class="box_bottom"></div>
+                    <a href="{{ url('book-detail', args=[book.slug]) }}" class="more">
+                        - Подробнее -
+                    </a>
+                    <div class="clear"></div>
                 </div>
-                <div class="clear"></div>
+                <div class="box_bottom"></div>
             </div>
-            {#            <div class="title"><span class="title_icon"><img src="{{ static([image_url, 'bullet2.gif']|join) }}" alt=""#}
-            {#                                                             title=""/></span>New books#}
-            {#            </div>#}
-            {#            <div class="new_products">#}
-            {#                <div class="new_prod_box">#}
-            {#                    <a href="details.html">product name</a>#}
-            {#                    <div class="new_prod_bg">#}
-            {#                        <span class="new_icon"><img src="{{ static([image_url, 'new_icon.gif']|join) }}" alt=""#}
-            {#                                                    title=""/></span>#}
-            {#                        <a href="details.html"><img src="{{ static([image_url, 'thumb1.gif']|join) }}" alt="" title=""#}
-            {#                                                    class="thumb" border="0"/></a>#}
-            {#                    </div>#}
-            {#                </div>#}
-            {#                <div class="new_prod_box">#}
-            {#                    <a href="details.html">product name</a>#}
-            {#                    <div class="new_prod_bg">#}
-            {#                        <span class="new_icon"><img src="{{ static([image_url, 'new_icon.gif']|join) }}" alt=""#}
-            {#                                                    title=""/></span>#}
-            {#                        <a href="details.html"><img src="{{ static([image_url, 'thumb2.gif']|join) }}" alt="" title=""#}
-            {#                                                    class="thumb" border="0"/></a>#}
-            {#                    </div>#}
-            {#                </div>#}
-            {#                <div class="new_prod_box">#}
-            {#                    <a href="details.html">product name</a>#}
-            {#                    <div class="new_prod_bg">#}
-            {#                        <span class="new_icon"><img src="{{ static([image_url, 'new_icon.gif']|join) }}" alt=""#}
-            {#                                                    title=""/></span>#}
-            {#                        <a href="details.html"><img src="{{ static([image_url, 'thumb3.gif']|join) }}" alt="" title=""#}
-            {#                                                    class="thumb" border="0"/></a>#}
-            {#                    </div>#}
-            {#                </div>#}
-            {#            </div>#}
-            {#            <div class="clear"></div>#}
+            <div class="clear"></div>
+        </div>
+    {% endfor %}
 {% endblock left_content %}

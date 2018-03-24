@@ -1,0 +1,10 @@
+{% extends 'themes/book_store/base.html' %}
+
+{% block left_content %}
+    <div class="title">
+        <span class="title_icon">
+            <img src="{{ static([theme_image_url, 'bullet1.gif']|join) }}" alt="" title=""/>
+        </span>
+        {{ book_detail.name }}
+    </div>
+{% endblock left_content %}

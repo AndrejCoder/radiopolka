@@ -81,6 +81,8 @@ TEMPLATES = [
     },
 ]
 
+IMAGE_URL = "images/"
+
 THEME_NAME = getattr(conf, 'THEME_NAME', 'default')
 
 THEME_IMAGE_URL = "images/themes/{0}/".format(THEME_NAME)

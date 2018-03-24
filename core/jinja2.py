@@ -9,8 +9,9 @@ def environment(**options):
     env.globals.update({
         'static': staticfiles_storage.url,
         'url': reverse,
-        'stylesheet_url': settings.THEME_STYLESHEET_URL,
-        'javascript_url': settings.THEME_JAVASCRIPT_URL,
-        'image_url': settings.THEME_IMAGE_URL
+        'theme_stylesheet_url': settings.THEME_STYLESHEET_URL,
+        'theme_javascript_url': settings.THEME_JAVASCRIPT_URL,
+        'theme_image_url': settings.THEME_IMAGE_URL,
+        'image_url': settings.IMAGE_URL
     })
     return env

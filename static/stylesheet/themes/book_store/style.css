@@ -22,9 +22,12 @@ p {
     line-height: 19px;
 }
 
-p.details {
+div.details {
     padding: 5px 15px 5px 15px;
     font-size: 11px;
+    margin: 0;
+    text-align: justify;
+    line-height: 19px;
 }
 
 p.details_cart {
@@ -167,6 +170,7 @@ span.title_icon {
     color: #f8981d;
     padding: 5px 0 0 15px;
     font-size: 13px;
+    margin-bottom: 10px;
 }
 
 a.more {

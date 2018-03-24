@@ -66,7 +66,7 @@ class Type(Model):
 
 
 class Book(Model):
-    slug = SlugField(verbose_name='Код книги')
+    slug = SlugField(verbose_name='Код книги', unique=True)
     name = CharField(verbose_name='Название книги', max_length=255)
     origin_name = CharField(verbose_name='Оригинальное название книги', max_length=255, blank=True, null=True)
     isbn = CharField(verbose_name='ISBN', max_length=25)
@@ -96,3 +96,8 @@ class Book(Model):
 
     def __str__(self):
         return '{0} - {1}'.format(', '.join(self.author.all().values_list('name', flat=True)), self.name)
+
+    @property
+    def author_str(self):
+        author_list = list(self.author.all().values_list('name', flat=True))
+        return ', '.join(author_list)
