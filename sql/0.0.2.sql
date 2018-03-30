@@ -93,7 +93,6 @@ BEGIN;
       weight            INTEGER                  NOT NULL,
       description_big   TEXT                     NOT NULL,
       description_small TEXT                     NOT NULL,
-      file              VARCHAR(100)             NOT NULL,
       category_id       VARCHAR(50)              NOT NULL
         CONSTRAINT core_book_category_id_cea0e710_fk_core_category_slug
         REFERENCES core_category
@@ -115,6 +114,7 @@ BEGIN;
       origin_name       VARCHAR(255),
       series            VARCHAR(255),
       paper_url         VARCHAR(255),
+      paper_name        VARCHAR(100),
       content           TEXT                     NOT NULL
     );
     CREATE INDEX core_book_slug_d62cdd35
