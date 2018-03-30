@@ -82,6 +82,7 @@ TEMPLATES = [
 ]
 
 IMAGE_URL = "images/"
+BOOK_URL = "books/"
 
 THEME_NAME = getattr(conf, 'THEME_NAME', 'default')
 

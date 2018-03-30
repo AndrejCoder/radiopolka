@@ -12,6 +12,7 @@ def environment(**options):
         'theme_stylesheet_url': settings.THEME_STYLESHEET_URL,
         'theme_javascript_url': settings.THEME_JAVASCRIPT_URL,
         'theme_image_url': settings.THEME_IMAGE_URL,
-        'image_url': settings.IMAGE_URL
+        'image_url': settings.IMAGE_URL,
+        'book_url': settings.BOOK_URL
     })
     return env

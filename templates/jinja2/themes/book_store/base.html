@@ -5,14 +5,14 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <title>Скачать бесплатно книги по радиоэлектронике и информатике</title>
     <link rel="stylesheet" type="text/css" href="{{ static([theme_stylesheet_url, 'style.css']|join) }}"/>
-    <link rel="shortcut icon" href="{{ static([image_url, 'rp.ico']|join) }}" type="image/x-icon">
+    <link rel="shortcut icon" href="{{ static([image_url, 'rp.png']|join) }}" type="image/x-icon">
 </head>
 <body>
 <div id="wrap">
     <div class="header">
         <div class="logo">
             <a href="/">
-                <img src="{{ static([theme_image_url, 'logo.gif']|join) }}" alt="" title="" border="0"/>
+                <img src="{{ static([theme_image_url, 'logo.png']|join) }}" alt="" title="" border="0"/>
             </a>
         </div>
         <div id="menu">
@@ -27,9 +27,11 @@
             {% endblock left_content %}
         </div><!--end of left content-->
         <div class="right_content">
+            <div class="about"></div>
             <div class="right_box">
-                <div class="title"><span class="title_icon"><img src="{{ static([theme_image_url, 'bullet5.gif']|join) }}"
-                                                                 alt="" title=""/></span>Категории
+                <div class="title"><span class="title_icon"><img
+                        src="{{ static([theme_image_url, 'bullet5.gif']|join) }}"
+                        alt="" title=""/></span>Категории
                 </div>
                 <ul class="list">
                     {% for category in category_list %}
@@ -37,45 +39,13 @@
                     {% endfor %}
                 </ul>
             </div>
-            <div class="right_box">
-                <div class="title"><span class="title_icon"><img src="{{ static([theme_image_url, 'bullet4.gif']|join) }}"
-                                                                 alt="" title=""/></span>Книги
-                </div>
-                <div class="new_prod_box">
-                    <a href="details.html">product name</a>
-                    <div class="new_prod_bg">
-                        <span class="new_icon"><img src="{{ static([theme_image_url, 'promo_icon.gif']|join) }}" alt=""
-                                                    title=""/></span>
-                        <a href="details.html"><img src="{{ static([theme_image_url, 'thumb1.gif']|join) }}" alt="" title=""
-                                                    class="thumb" border="0"/></a>
-                    </div>
-                </div>
-                <div class="new_prod_box">
-                    <a href="details.html">product name</a>
-                    <div class="new_prod_bg">
-                        <span class="new_icon"><img src="{{ static([theme_image_url, 'promo_icon.gif']|join) }}" alt=""
-                                                    title=""/></span>
-                        <a href="details.html"><img src="{{ static([theme_image_url, 'thumb2.gif']|join) }}" alt="" title=""
-                                                    class="thumb"
-                                                    border="0"/></a>
-                    </div>
-                </div>
-                <div class="new_prod_box">
-                    <a href="details.html">product name</a>
-                    <div class="new_prod_bg">
-                        <span class="new_icon"><img src="{{ static([theme_image_url, 'promo_icon.gif']|join) }}" alt=""
-                                                    title=""/></span>
-                        <a href="details.html"><img src="{{ static([theme_image_url, 'thumb3.gif']|join) }}" alt="" title=""
-                                                    class="thumb" border="0"/></a>
-                    </div>
-                </div>
-            </div>
+            <div class="about"></div>
         </div><!--end of right content-->
         <div class="clear"></div>
     </div><!--end of center content-->
     <div class="footer">
         <div class="left_footer">
-            <img src="{{ static([theme_image_url, 'logo.gif']|join) }}" alt="" title=""/>
+            <img src="{{ static([theme_image_url, 'logo.png']|join) }}" alt="" title=""/>
         </div>
         <div class="right_footer">
             <a href="/">Главная</a>

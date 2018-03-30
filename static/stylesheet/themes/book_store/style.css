@@ -57,7 +57,7 @@ p.more_details {
 }
 
 .logo {
-    padding: 50px 0 0 130px;
+    padding: 50px 0 0 70px;
 }
 
 /*-----------------------------menu-------------------*/
@@ -168,8 +168,9 @@ span.title_icon {
 
 .prod_title {
     color: #f8981d;
-    padding: 5px 0 0 15px;
-    font-size: 13px;
+    padding: 0;
+    font-size: 15px;
+    font-weight: bold;
     margin-bottom: 10px;
 }
 
@@ -179,7 +180,22 @@ a.more {
     float: right;
     text-decoration: none;
     font-size: 11px;
+    font-weight: bold;
     padding: 0 15px 0 0;
+}
+
+img.detail-img {
+    float: left;
+}
+
+div.detail-description {
+    margin-right: 10px;
+}
+
+hr.hr-title {
+    border: 0;
+    border-bottom: 1px dashed #ccc;
+    background: #999;
 }
 
 .about {

@@ -9,15 +9,17 @@
     </div>
     {% for book in book_list %}
         <div class="feat_prod_box">
+            <hr class="hr-title"/>
             <div class="prod_title">
                 <a href="{{ url('book-detail', args=[book.slug]) }}" style="text-decoration: none;">
                     {{ book.name }}
                 </a>
             </div>
+            <hr class="hr-title"/>
             <div class="prod_img">
                 <a href="{{ url('book-detail', args=[book.slug]) }}">
                     <img src="{{ static([image_url, 'books/', book.id, '_middle.jpg']|join) }}" alt="" title=""
-                         border="1"/>
+                         border="0"/>
                 </a><br/><br/>
                 <div style="text-align: left; font-size: 9px;">
                     <strong>Страниц:</strong> {{ book.pages }}<br/>
@@ -35,7 +37,7 @@
                         <strong>Год издания:</strong> {{ book.year }}<br/>
                         <strong>Издательство:</strong> {{ book.publisher.name }}<br/>
                         <strong>Оригин. название:</strong> {{ book.origin_name }}<br/>
-                        <hr/>
+                        <hr class="hr-title"/>
                         {{ book.description_small|safe }}
                     </div>
                     <a href="{{ url('book-detail', args=[book.slug]) }}" class="more">
