@@ -1,3 +1,4 @@
+from core.dictionary import ALPHABET
 from core.models import Book
 
 
@@ -10,6 +11,14 @@ class BookApi:
     @classmethod
     def list_by_category(cls, slug):
         return cls.list().filter(category__slug=slug)
+
+    @classmethod
+    def list_by_alphabet(cls, letter):
+        if letter == '0-9':
+            _filter = {'name__regex': r'^\d'}
+        else:
+            _filter = {'name__istartswith': ALPHABET.get(letter)}
+        return cls.list().filter(**_filter)
 
     @classmethod
     def detail(cls, slug):

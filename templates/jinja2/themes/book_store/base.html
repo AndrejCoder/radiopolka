@@ -27,7 +27,11 @@
             {% endblock left_content %}
         </div><!--end of left content-->
         <div class="right_content">
-            <div class="about"></div>
+            <div class="about">
+                {% for alphabet in alphabet_list %}
+                    <a href="{{ url('book-alphabet', args=[alphabet.key]) }}" style="font-size: 17px; font-weight: bold; text-decoration: none;">{{ alphabet.value }}</a>
+                {% endfor %}
+            </div>
             <div class="right_box">
                 <div class="title"><span class="title_icon"><img
                         src="{{ static([theme_image_url, 'bullet5.gif']|join) }}"
