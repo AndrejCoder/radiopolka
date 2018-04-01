@@ -12,7 +12,7 @@ import sys
 
 from django.core.wsgi import get_wsgi_application
 
-path = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), os.pardir)
+path = '/home/radiopolka/radiopolka_project/radiopolka'
 if path not in sys.path:
     sys.path.append(path)
 
