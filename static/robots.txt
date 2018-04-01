@@ -1,0 +1,8 @@
+User-agent: *
+Disallow: /*.pdf
+Disallow: /*.ppt
+Disallow: /*.doc
+Disallow: /*.xls
+Disallow: /*.txt
+Disallow: /admin
+Crawl-delay: 3
