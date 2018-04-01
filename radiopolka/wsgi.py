@@ -12,9 +12,7 @@ import sys
 
 from django.core.wsgi import get_wsgi_application
 
-import conf
-
-path = conf.PROJECT_PATH
+path = '/home/radiopolka/radiopolka_project/radiopolka'
 if path not in sys.path:
     sys.path.append(path)
 
