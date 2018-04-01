@@ -5,7 +5,7 @@
         <span class="title_icon">
             <img src="{{ static([theme_image_url, 'bullet1.gif']|join) }}" alt="" title=""/>
         </span>
-        {{ book_detail.name }}<br/>
+        {{ title }}<br/>
         <span style="font-size: 14px;"><a href="{{ url('books-by-category', args=[book_detail.category.slug]) }}"
                                           style="text-decoration: none;">{{ book_detail.category.name }}</a></span>
     </div>
@@ -20,7 +20,7 @@
         <strong>Издательство:</strong> {{ book_detail.publisher.name }}<br/>
         <strong>Оригин. название:</strong> {{ book_detail.origin_name }}<br/>
         <strong>Серия:</strong> {{ book_detail.series }}<br/>
-        <strong>Формат:</strong> {{ book_detail.format }}<br/>
+        <strong>Формат издания:</strong> {{ book_detail.format }}<br/>
         <strong>Тип издания:</strong> {{ book_detail.type.name }}<br/>
         <strong>Страниц:</strong> {{ book_detail.pages }}<br/>
         <strong>Вес:</strong> {{ book_detail.weight }} г.<br/>
@@ -32,6 +32,7 @@
         <hr class="hr-title"/>
         {{ book_detail.description_big|safe }}
         <hr class="hr-title"/>
+            <strong>Формат файла:</strong> {{ book_detail.file_format }} | <strong>Размер файла:</strong> {{ book_detail.file_size }} МБ | <strong>Пароль к файлу:</strong> radiopolka.ru<br/><br/>
             <a href="{{ static([book_url, book_detail.id, '-', book_detail.slug, '.zip']|join) }}" style="margin-left: 110px;">
                 <img src="{{ static([theme_image_url, 'download.png']|join) }}"/>
             </a>

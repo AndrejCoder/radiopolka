@@ -89,6 +89,8 @@ class Book(Model):
     paper_url = CharField(verbose_name='Ссылка на бумажную версию', max_length=255, blank=True, null=True)
     paper_name = CharField(verbose_name='Название сайта с бумажной версией', max_length=100, blank=True, null=True)
     content = RichTextField(verbose_name='Содержание')
+    file_format = CharField(verbose_name='Формат файла', max_length=10)
+    file_size = CharField(verbose_name='Размер файла', max_length=10)
 
     class Meta:
         verbose_name = 'Книга'

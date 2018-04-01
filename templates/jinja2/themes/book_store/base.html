@@ -3,7 +3,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="ru">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <title>Скачать бесплатно книги по радиоэлектронике и информатике</title>
+    <title>{% if tab_title %}{{ tab_title }} - {% endif %}Скачать бесплатно книги по радиоэлектронике и информатике</title>
     <link rel="stylesheet" type="text/css" href="{{ static([theme_stylesheet_url, 'style.css']|join) }}"/>
     <link rel="shortcut icon" href="{{ static([image_url, 'rp.png']|join) }}" type="image/x-icon">
 </head>

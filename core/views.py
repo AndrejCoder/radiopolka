@@ -30,7 +30,9 @@ class IndexView(BaseTemplateView):
         context_data.update({
             'category_list': category_list,
             'book_list': book_list,
-            'alphabet_list': alphabet_list
+            'alphabet_list': alphabet_list,
+            'title': 'Перечень книг',
+            'tab_title': ''
         })
 
         return context_data
@@ -48,13 +50,16 @@ class BooksByCategoryView(BaseTemplateView):
         for k, v in ALPHABET.items():
             alphabet_list.append({'key': k, 'value': v})
 
+        category = CategoryApi.by_pk(slug)
         category_list = CategoryApi.list()
         book_list = BookApi.list_by_category(slug)
 
         context_data.update({
             'category_list': category_list,
             'book_list': book_list,
-            'alphabet_list': alphabet_list
+            'alphabet_list': alphabet_list,
+            'title': 'Перечень книг категории «{0}»'.format(category.name),
+            'tab_title': 'Перечень книг категории «{0}»'.format(category.name)
         })
 
         return context_data
@@ -78,7 +83,9 @@ class BookDetailView(BaseTemplateView):
         context_data.update({
             'category_list': category_list,
             'book_detail': book_detail,
-            'alphabet_list': alphabet_list
+            'alphabet_list': alphabet_list,
+            'title': book_detail.name,
+            'tab_title': '{0} - {1}'.format(book_detail.author_str, book_detail.name)
         })
 
         return context_data
@@ -99,10 +106,17 @@ class BooksByAlphaBetView(BaseTemplateView):
         category_list = CategoryApi.list()
         book_list = BookApi.list_by_alphabet(letter)
 
+        if letter == '0-9':
+            title = 'Перечень книг, начинающихся на цифру'
+        else:
+            title = 'Перечень книг, начинающихся на букву «{0}»'.format(ALPHABET.get(letter))
+
         context_data.update({
             'category_list': category_list,
             'book_list': book_list,
-            'alphabet_list': alphabet_list
+            'alphabet_list': alphabet_list,
+            'title': title,
+            'tab_title': title
         })
 
         return context_data
