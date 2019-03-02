@@ -5,7 +5,7 @@ class CategoryApi:
 
     @classmethod
     def list(cls):
-        return Category.objects.all()
+        return Category.objects.all().order_by('name')
 
     @classmethod
     def by_pk(cls, pk):
