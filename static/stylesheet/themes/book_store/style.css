@@ -628,7 +628,7 @@ div.pagination span.disabled {
 
 /*---------------footer------------------------*/
 .footer {
-    height: 100px;
+    height: 70px;
     border-top: 1px #b2b2b2 dashed;
     background: url(../../../images/themes/book_store/footer_bg.gif) no-repeat bottom;
 }
