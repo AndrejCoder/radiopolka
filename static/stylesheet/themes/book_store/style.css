@@ -314,6 +314,7 @@ ul.list {
 ul.list li {
     list-style: none;
     padding: 2px 0 2px 0;
+    font-weight: bold;
 }
 
 ul.list li a {
