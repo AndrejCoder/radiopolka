@@ -32,9 +32,11 @@
         <hr class="hr-title"/>
         {{ book_detail.description_big|safe }}
         <hr class="hr-title"/>
-            <strong>Формат файла:</strong> {{ book_detail.file_format }} | <strong>Размер файла:</strong> {{ book_detail.file_size }} МБ | <strong>Пароль к файлу:</strong> radiopolka.ru<br/><br/>
-            <a href="{{ static([book_url, book_detail.id, '-', book_detail.slug, '.zip']|join) }}" style="margin-left: 110px;">
-                <img src="{{ static([theme_image_url, 'download.png']|join) }}"/>
-            </a>
+        <strong>Формат файла:</strong> {{ book_detail.file_format }}<br/>
+        <strong>Размер файла:</strong> {{ book_detail.file_size }} МБ<br/>
+        <strong>Пароль к файлу:</strong> radiopolka.ru<br/><br/>
+        <a href="{{ static([book_url, book_detail.id, '-', book_detail.slug, '.zip']|join) }}" style="margin-left: 110px;">
+            <img src="{{ static([theme_image_url, 'download.png']|join) }}"/>
+        </a>
     </div>
 {% endblock left_content %}
