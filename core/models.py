@@ -85,7 +85,7 @@ class Book(Model):
     weight = IntegerField(verbose_name='Вес')
     description_small = RichTextField(verbose_name='Описание (короткое)')
     description_big = RichTextField(verbose_name='Описание (полное)')
-    created_date = DateTimeField(verbose_name='Дата добавления', auto_created=True)
+    created_date = DateTimeField(verbose_name='Дата добавления', auto_now_add=True, editable=False)
     paper_url = CharField(verbose_name='Ссылка на бумажную версию', max_length=255, blank=True, null=True)
     paper_name = CharField(verbose_name='Название сайта с бумажной версией', max_length=100, blank=True, null=True)
     content = RichTextField(verbose_name='Содержание')
