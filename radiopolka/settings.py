@@ -42,7 +42,8 @@ INSTALLED_APPS = [
     'django_extensions',
     'ckeditor',
     'core',
-    'version'
+    'version',
+    'sape'
 ]
 
 MIDDLEWARE = [
@@ -155,3 +156,12 @@ MEDIA_ROOT = '{0}{1}'.format(BASE_DIR, MEDIA_URL)
 CKEDITOR_UPLOAD_PATH = 'media/ckeditor'
 
 ADMIN_SITE_HEADER = "Администрирование сайта www.radiopolka.ru"
+
+# SAPE.RU
+# Обязательные настройки
+SAPE_DOMAIN = 'radiopolka.ru'
+SAPE_USER = 'bely1986'
+# Остальные настройки
+SAPE_SHOW_CODE = False  # Показывать или нет проверочный код sape (при добавлении страниц сайте в сервис).
+SAPE_CHARSET = 'utf8'  # Кодировка сайта
+SAPE_DIR = '/home/radiopolka/radiopolka_project/sape/'  # Где будет храниться файл, содержащий полученные с sape ссылки.
