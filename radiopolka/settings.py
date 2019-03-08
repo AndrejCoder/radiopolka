@@ -43,7 +43,7 @@ INSTALLED_APPS = [
     'ckeditor',
     'core',
     'version',
-    'sape'
+    'linkzilla.django'
 ]
 
 MIDDLEWARE = [
@@ -64,7 +64,12 @@ TEMPLATES = [
         'BACKEND': 'django.template.backends.jinja2.Jinja2',
         'DIRS': [os.path.join(BASE_DIR, 'templates/jinja2')],
         'APP_DIRS': True,
-        'OPTIONS': {'environment': 'core.jinja2.environment'},
+        'OPTIONS': {
+            'environment': 'core.jinja2.environment',
+            'context_processors': [
+                'linkzilla.django.context_processors.linkzilla',
+            ]
+        },
     },
     {
         'NAME': 'django',
@@ -76,7 +81,7 @@ TEMPLATES = [
                 'django.template.context_processors.debug',
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
-                'django.contrib.messages.context_processors.messages',
+                'django.contrib.messages.context_processors.messages'
             ],
         },
     },
@@ -157,11 +162,15 @@ CKEDITOR_UPLOAD_PATH = 'media/ckeditor'
 
 ADMIN_SITE_HEADER = "Администрирование сайта www.radiopolka.ru"
 
-# SAPE.RU
-# Обязательные настройки
-SAPE_DOMAIN = 'radiopolka.ru'
-SAPE_USER = 'bely1986'
-# Остальные настройки
-SAPE_SHOW_CODE = False  # Показывать или нет проверочный код sape (при добавлении страниц сайте в сервис).
-SAPE_CHARSET = 'utf8'  # Кодировка сайта
-SAPE_DIR = '/home/radiopolka/radiopolka_project/sape/'  # Где будет храниться файл, содержащий полученные с sape ссылки.
+LINKZILLA_SERVICES = ['sape', ]
+LINKZILLA_CONFIG = {
+    'sape': {
+        'name': 'sape',
+        'user': 'c147e46648d8cbbe8d21a7bdd550415a',
+        'host': 'radiopolka.ru',
+        'storage': {
+            'name': 'dbm',
+            'database_path': os.path.join(BASE_DIR, os.pardir, 'sape'),
+        }
+    }
+}
