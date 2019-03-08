@@ -170,7 +170,7 @@ LINKZILLA_CONFIG = {
         'host': 'radiopolka.ru',
         'storage': {
             'name': 'dbm',
-            'database_path': os.path.join(BASE_DIR, os.pardir, 'sape'),
+            'database_path': os.path.join(BASE_DIR, os.pardir, 'sape/links.db'),
         }
     }
 }
