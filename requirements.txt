@@ -8,3 +8,4 @@ image
 pip
 setuptools
 olefile
+-e git+ssh://git@github.com/Andrjuxa/linkexchange.git#egg=linkexchange

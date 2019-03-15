@@ -43,7 +43,9 @@ INSTALLED_APPS = [
     'ckeditor',
     'core',
     'version',
-    'linkzilla.django'
+    'linkexchange',
+    'linkexchange.clients',
+    'linkexchange.platform'
 ]
 
 MIDDLEWARE = [
@@ -65,10 +67,7 @@ TEMPLATES = [
         'DIRS': [os.path.join(BASE_DIR, 'templates/jinja2')],
         'APP_DIRS': True,
         'OPTIONS': {
-            'environment': 'core.jinja2.environment',
-            'context_processors': [
-                'linkzilla.django.context_processors.linkzilla',
-            ]
+            'environment': 'core.jinja2.environment'
         },
     },
     {
@@ -161,16 +160,3 @@ MEDIA_ROOT = '{0}{1}'.format(BASE_DIR, MEDIA_URL)
 CKEDITOR_UPLOAD_PATH = 'media/ckeditor'
 
 ADMIN_SITE_HEADER = "Администрирование сайта www.radiopolka.ru"
-
-LINKZILLA_SERVICES = ['sape', ]
-LINKZILLA_CONFIG = {
-    'sape': {
-        'name': 'sape',
-        'user': 'c147e46648d8cbbe8d21a7bdd550415a',
-        'host': 'radiopolka.ru',
-        'storage': {
-            'name': 'dbm',
-            'database_path': os.path.join(BASE_DIR, os.pardir, 'sape/links.db'),
-        }
-    }
-}
