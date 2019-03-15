@@ -26,8 +26,7 @@ def sape():
 
 def environment(**options):
     env = Environment(**options)
-    sape_links = sape()
-    print(sape_links[0].link_code)
+    # sape_links = sape()
     env.globals.update({
         'static': staticfiles_storage.url,
         'url': reverse,
@@ -36,6 +35,6 @@ def environment(**options):
         'theme_image_url': settings.THEME_IMAGE_URL,
         'image_url': settings.IMAGE_URL,
         'book_url': settings.BOOK_URL,
-        'sape_links': sape_links[0].link_code if sape_links else ''
+        # 'sape_links': sape_links[0].link_code if sape_links else ''
     })
     return env
