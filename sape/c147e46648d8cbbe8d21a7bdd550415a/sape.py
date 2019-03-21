@@ -211,7 +211,7 @@ class SapeBase:
             self._format = options.get('format')
 
         if options.get('split_data_file'):
-            self._split_data_file = bool(options.get('split_data_file')
+            self._split_data_file = bool(options.get('split_data_file'))
 
     /**
      * Получить строку User-Agent
