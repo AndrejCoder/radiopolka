@@ -14,11 +14,30 @@
 """
 import base64
 import pickle
+import urllib
 
 from django.conf import settings
 
 SAPE_USER_UUID = settings.SAPE_USER_UUID
 SAPE_SITE = settings.SAPE_SITE
+
+def file_get_contents(filename, use_include_path = 0, context = None, offset = -1, maxlen = -1):
+    if (filename.find('://') > 0):
+        ret = urllib.request.urlopen(filename).read()
+        if (offset > 0):
+            ret = ret[offset:]
+        if (maxlen > 0):
+            ret = ret[:maxlen]
+        return ret
+    else:
+        fp = open(filename,'rb')
+        try:
+            if offset > 0:
+                fp.seek(offset)
+            ret = fp.read(maxlen)
+            return ret
+        finally:
+            fp.close()
 
 # Основной класс, выполняющий всю рутину
 class SapeBase:
@@ -243,90 +262,90 @@ class SapeBase:
 
         user_agent = self._get_full_user_agent_string()
 
-        @ini_set('allow_url_fopen', 1);
-        @ini_set('default_socket_timeout', $this->_socket_timeout);
-        @ini_set('user_agent', $user_agent);
+        # @ini_set('allow_url_fopen', 1);
+        # @ini_set('default_socket_timeout', $this->_socket_timeout);
+        # @ini_set('user_agent', $user_agent);
+
+        allow_url_fopen = 1
+        default_socket_timeout = self._socket_timeout
+
         if (
-            $this->_fetch_remote_type == 'file_get_contents'
-            ||
+            self._fetch_remote_type == 'file_get_contents'
+            or
             (
-                $this->_fetch_remote_type == ''
-                &&
-                function_exists('file_get_contents')
-                &&
-                ini_get('allow_url_fopen') == 1
+                self._fetch_remote_type == ''
+                and
+                # function_exists('file_get_contents')
+                # and
+                allow_url_fopen == 1
             )
-        ) {
-            $this->_fetch_remote_type = 'file_get_contents';
+        ):
+            self._fetch_remote_type = 'file_get_contents'
 
-            if ($specifyCharset && function_exists('stream_context_create')) {
-                $opts    = array(
-                    'http' => array(
-                        'method' => 'GET',
-                        'header' => 'Accept-Charset: ' . $this->_charset . "\r\n"
-                    )
-                );
-                $context = @stream_context_create($opts);
-                if ($data = @file_get_contents('http://' . $host . $path, null, $context)) {
-                    return $data;
+            if specifyCharset:
+                opts    = {
+                    'http': {
+                        'method': 'GET',
+                        'header': 'Accept-Charset: {0}\r\n'.format(self._charset)
+                    }
                 }
-            } else {
-                if ($data = @file_get_contents('http://' . $host . $path)) {
-                    return $data;
-                }
-            }
-        } elseif (
-            $this->_fetch_remote_type == 'curl'
-            ||
-            (
-                $this->_fetch_remote_type == ''
-                &&
-                function_exists('curl_init')
-            )
-        ) {
-            $this->_fetch_remote_type = 'curl';
-            if ($ch = @curl_init()) {
+                # $context = @stream_context_create($opts);
+                if data == file_get_contents('http://{0}{1}'.format(host, path)):
+                    return data
+            else:
+                if data == file_get_contents('http://{0}{1}'.format(host, path)):
+                    return data
+        # elif (
+        #     self._fetch_remote_type == 'curl'
+        #     or
+        #     (
+        #         self._fetch_remote_type == ''
+        #         # &&
+        #         # function_exists('curl_init')
+        #     )
+        # ):
+        #     self._fetch_remote_type = 'curl';
+        #     if ($ch = @curl_init()) {
+        #
+        #         @curl_setopt($ch, CURLOPT_URL, 'http://' . $host . $path);
+        #         @curl_setopt($ch, CURLOPT_HEADER, false);
+        #         @curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        #         @curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, $this->_socket_timeout);
+        #         @curl_setopt($ch, CURLOPT_USERAGENT, $user_agent);
+        #         if ($specifyCharset) {
+        #             @curl_setopt($ch, CURLOPT_HTTPHEADER, array('Accept-Charset: ' . $this->_charset));
+        #         }
+        #
+        #         $data = @curl_exec($ch);
+        #         @curl_close($ch);
+        #
+        #         if ($data) {
+        #             return $data;
+        #         }
+        #     }
+        # } else {
+        #     $this->_fetch_remote_type = 'socket';
+        #     $buff                     = '';
+        #     $fp                       = @fsockopen($host, 80, $errno, $errstr, $this->_socket_timeout);
+        #     if ($fp) {
+        #         @fputs($fp, "GET {$path} HTTP/1.0\r\nHost: {$host}\r\n");
+        #         if ($specifyCharset) {
+        #             @fputs($fp, "Accept-Charset: {$this->_charset}\r\n");
+        #         }
+        #         @fputs($fp, "User-Agent: {$user_agent}\r\n\r\n");
+        #         while (!@feof($fp)) {
+        #             $buff .= @fgets($fp, 128);
+        #         }
+        #         @fclose($fp);
+        #
+        #         $page = explode("\r\n\r\n", $buff);
+        #         unset($page[0]);
+        #
+        #         return implode("\r\n\r\n", $page);
+        #     }
+        # }
 
-                @curl_setopt($ch, CURLOPT_URL, 'http://' . $host . $path);
-                @curl_setopt($ch, CURLOPT_HEADER, false);
-                @curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-                @curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, $this->_socket_timeout);
-                @curl_setopt($ch, CURLOPT_USERAGENT, $user_agent);
-                if ($specifyCharset) {
-                    @curl_setopt($ch, CURLOPT_HTTPHEADER, array('Accept-Charset: ' . $this->_charset));
-                }
-
-                $data = @curl_exec($ch);
-                @curl_close($ch);
-
-                if ($data) {
-                    return $data;
-                }
-            }
-        } else {
-            $this->_fetch_remote_type = 'socket';
-            $buff                     = '';
-            $fp                       = @fsockopen($host, 80, $errno, $errstr, $this->_socket_timeout);
-            if ($fp) {
-                @fputs($fp, "GET {$path} HTTP/1.0\r\nHost: {$host}\r\n");
-                if ($specifyCharset) {
-                    @fputs($fp, "Accept-Charset: {$this->_charset}\r\n");
-                }
-                @fputs($fp, "User-Agent: {$user_agent}\r\n\r\n");
-                while (!@feof($fp)) {
-                    $buff .= @fgets($fp, 128);
-                }
-                @fclose($fp);
-
-                $page = explode("\r\n\r\n", $buff);
-                unset($page[0]);
-
-                return implode("\r\n\r\n", $page);
-            }
-        }
-
-        return $this->_raise_error('Не могу подключиться к серверу: ' . $host . $path . ', type: ' . $this->_fetch_remote_type);
-    }
+        return self._raise_error('Не могу подключиться к серверу: {0}{1}, type: {2}'.format(host, path, self._fetch_remote_type)
 
     /**
      * Функция чтения из локального файла
