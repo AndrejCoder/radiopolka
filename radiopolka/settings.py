@@ -43,9 +43,7 @@ INSTALLED_APPS = [
     'ckeditor',
     'core',
     'version',
-    'linkexchange',
-    'linkexchange.clients',
-    'linkexchange.platform'
+    'sape'
 ]
 
 MIDDLEWARE = [
@@ -160,3 +158,6 @@ MEDIA_ROOT = '{0}{1}'.format(BASE_DIR, MEDIA_URL)
 CKEDITOR_UPLOAD_PATH = 'media/ckeditor'
 
 ADMIN_SITE_HEADER = "Администрирование сайта www.radiopolka.ru"
+
+SAPE_USER_UUID = 'c147e46648d8cbbe8d21a7bdd550415a'
+SAPE_SITE = 'radiopolka.ru'
