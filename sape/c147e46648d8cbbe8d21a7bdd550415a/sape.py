@@ -12,6 +12,9 @@
  @link http://help.sape.ru/sape/faq/27
  @link http://help.sape.ru/articles/faq/1041
 """
+import base64
+import pickle
+
 from django.conf import settings
 
 SAPE_USER_UUID = settings.SAPE_USER_UUID
@@ -213,37 +216,32 @@ class SapeBase:
         if options.get('split_data_file'):
             self._split_data_file = bool(options.get('split_data_file'))
 
-    /**
-     * Получить строку User-Agent
-     *
-     * @return string
-     */
-    protected function _get_full_user_agent_string()
-    {
-        return $this->_user_agent . ' ' . $this->_version;
-    }
+    """
+     Получить строку User-Agent
+     
+     @return string
+    """
+    def _get_full_user_agent_string(self):
+        return '{0} {1}'.format(self._user_agent, self._version)
 
-    /**
-     * Вывести дебаг-информацию
-     *
-     * @param $data
-     *
-     * @return string
-     */
-    protected function _debug_output($data)
-    {
-        $data = '<!-- <sape_debug_info>' . @base64_encode(serialize($data)) . '</sape_debug_info> -->';
+    """
+     Вывести дебаг-информацию
+     
+     @param $data
+     
+     @return string
+    """
+    def _debug_output(self, data):
+        data = '<!-- <sape_debug_info>{0}</sape_debug_info> -->'.format(base64.b64encode(pickle.dumps(data)))
 
-        return $data;
-    }
+        return data
 
-    /**
-     * Функция для подключения к удалённому серверу
-     */
-    protected function _fetch_remote_file($host, $path, $specifyCharset = false)
-    {
+    """
+     Функция для подключения к удалённому серверу
+    """
+    def _fetch_remote_file(self, host, path, specifyCharset=False):
 
-        $user_agent = $this->_get_full_user_agent_string();
+        user_agent = self._get_full_user_agent_string()
 
         @ini_set('allow_url_fopen', 1);
         @ini_set('default_socket_timeout', $this->_socket_timeout);
