@@ -14,18 +14,17 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.conf import settings
-from django.conf.urls import url
 from django.contrib import admin
-from django.urls import path, include
+from django.urls import path, re_path, include
 
 from core.views import IndexView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    url(r'^$', IndexView.as_view(), name='index'),
-    url(r'^ckeditor/', include('ckeditor_uploader.urls')),
-    url(r'^category/', include('core.category_urls'), name='category'),
-    url(r'^book/', include('core.book_urls'), name='book')
+    re_path(r'^$', IndexView.as_view(), name='index'),
+    re_path(r'^ckeditor/', include('django_ckeditor_5.urls')),
+    re_path(r'^category/', include('core.category_urls'), name='category'),
+    re_path(r'^book/', include('core.book_urls'), name='book')
 ]
 
 admin.site.site_header = settings.ADMIN_SITE_HEADER

@@ -2,13 +2,13 @@
 -- PostgreSQL database dump
 --
 
--- Dumped from database version 16.6 (Ubuntu 16.6-0ubuntu0.24.04.1)
--- Dumped by pg_dump version 16.6 (Ubuntu 16.6-0ubuntu0.24.04.1)
+-- Dumped from database version 11.6
+-- Dumped by pg_dump version 12.1
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
 SET idle_in_transaction_session_timeout = 0;
-SET client_encoding = 'UTF8';
+SET client_encoding = 'SQL_ASCII';
 SET standard_conforming_strings = on;
 SELECT pg_catalog.set_config('search_path', '', false);
 SET check_function_bodies = false;
@@ -18,15 +18,13 @@ SET row_security = off;
 
 SET default_tablespace = '';
 
-SET default_table_access_method = heap;
-
 --
 -- Name: auth_group; Type: TABLE; Schema: public; Owner: radiopolka
 --
 
 CREATE TABLE public.auth_group (
     id integer NOT NULL,
-    name character varying(150) NOT NULL
+    name character varying(80) NOT NULL
 );
 
 
@@ -44,7 +42,7 @@ CREATE SEQUENCE public.auth_group_id_seq
     CACHE 1;
 
 
-ALTER SEQUENCE public.auth_group_id_seq OWNER TO radiopolka;
+ALTER TABLE public.auth_group_id_seq OWNER TO radiopolka;
 
 --
 -- Name: auth_group_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: radiopolka
@@ -78,7 +76,7 @@ CREATE SEQUENCE public.auth_group_permissions_id_seq
     CACHE 1;
 
 
-ALTER SEQUENCE public.auth_group_permissions_id_seq OWNER TO radiopolka;
+ALTER TABLE public.auth_group_permissions_id_seq OWNER TO radiopolka;
 
 --
 -- Name: auth_group_permissions_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: radiopolka
@@ -113,7 +111,7 @@ CREATE SEQUENCE public.auth_permission_id_seq
     CACHE 1;
 
 
-ALTER SEQUENCE public.auth_permission_id_seq OWNER TO radiopolka;
+ALTER TABLE public.auth_permission_id_seq OWNER TO radiopolka;
 
 --
 -- Name: auth_permission_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: radiopolka
@@ -132,7 +130,7 @@ CREATE TABLE public.auth_user (
     last_login timestamp with time zone,
     is_superuser boolean NOT NULL,
     username character varying(150) NOT NULL,
-    first_name character varying(150) NOT NULL,
+    first_name character varying(30) NOT NULL,
     last_name character varying(150) NOT NULL,
     email character varying(254) NOT NULL,
     is_staff boolean NOT NULL,
@@ -168,7 +166,7 @@ CREATE SEQUENCE public.auth_user_groups_id_seq
     CACHE 1;
 
 
-ALTER SEQUENCE public.auth_user_groups_id_seq OWNER TO radiopolka;
+ALTER TABLE public.auth_user_groups_id_seq OWNER TO radiopolka;
 
 --
 -- Name: auth_user_groups_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: radiopolka
@@ -189,7 +187,7 @@ CREATE SEQUENCE public.auth_user_id_seq
     CACHE 1;
 
 
-ALTER SEQUENCE public.auth_user_id_seq OWNER TO radiopolka;
+ALTER TABLE public.auth_user_id_seq OWNER TO radiopolka;
 
 --
 -- Name: auth_user_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: radiopolka
@@ -223,7 +221,7 @@ CREATE SEQUENCE public.auth_user_user_permissions_id_seq
     CACHE 1;
 
 
-ALTER SEQUENCE public.auth_user_user_permissions_id_seq OWNER TO radiopolka;
+ALTER TABLE public.auth_user_user_permissions_id_seq OWNER TO radiopolka;
 
 --
 -- Name: auth_user_user_permissions_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: radiopolka
@@ -303,7 +301,7 @@ CREATE SEQUENCE public.core_book_author_id_seq
     CACHE 1;
 
 
-ALTER SEQUENCE public.core_book_author_id_seq OWNER TO radiopolka;
+ALTER TABLE public.core_book_author_id_seq OWNER TO radiopolka;
 
 --
 -- Name: core_book_author_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: radiopolka
@@ -324,7 +322,7 @@ CREATE SEQUENCE public.core_book_id_seq
     CACHE 1;
 
 
-ALTER SEQUENCE public.core_book_id_seq OWNER TO radiopolka;
+ALTER TABLE public.core_book_id_seq OWNER TO radiopolka;
 
 --
 -- Name: core_book_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: radiopolka
@@ -421,7 +419,7 @@ CREATE SEQUENCE public.django_admin_log_id_seq
     CACHE 1;
 
 
-ALTER SEQUENCE public.django_admin_log_id_seq OWNER TO radiopolka;
+ALTER TABLE public.django_admin_log_id_seq OWNER TO radiopolka;
 
 --
 -- Name: django_admin_log_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: radiopolka
@@ -455,7 +453,7 @@ CREATE SEQUENCE public.django_content_type_id_seq
     CACHE 1;
 
 
-ALTER SEQUENCE public.django_content_type_id_seq OWNER TO radiopolka;
+ALTER TABLE public.django_content_type_id_seq OWNER TO radiopolka;
 
 --
 -- Name: django_content_type_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: radiopolka
@@ -490,7 +488,7 @@ CREATE SEQUENCE public.django_migrations_id_seq
     CACHE 1;
 
 
-ALTER SEQUENCE public.django_migrations_id_seq OWNER TO radiopolka;
+ALTER TABLE public.django_migrations_id_seq OWNER TO radiopolka;
 
 --
 -- Name: django_migrations_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: radiopolka
@@ -536,7 +534,7 @@ CREATE SEQUENCE public.version_version_id_seq
     CACHE 1;
 
 
-ALTER SEQUENCE public.version_version_id_seq OWNER TO radiopolka;
+ALTER TABLE public.version_version_id_seq OWNER TO radiopolka;
 
 --
 -- Name: version_version_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: radiopolka
@@ -689,19 +687,6 @@ COPY public.auth_permission (id, name, content_type_id, codename) FROM stdin;
 37	Can add version	13	add_version
 38	Can change version	13	change_version
 39	Can delete version	13	delete_version
-40	Can view log entry	1	view_logentry
-41	Can view permission	2	view_permission
-42	Can view group	3	view_group
-43	Can view user	4	view_user
-44	Can view content type	5	view_contenttype
-45	Can view session	6	view_session
-46	Can view Категория	9	view_category
-47	Can view Автор	7	view_author
-48	Can view Издательство	11	view_publisher
-49	Can view Язык издания	10	view_language
-50	Can view Тип издания	12	view_type
-51	Can view Книга	8	view_book
-52	Can view version	13	view_version
 \.
 
 
@@ -711,7 +696,6 @@ COPY public.auth_permission (id, name, content_type_id, codename) FROM stdin;
 
 COPY public.auth_user (id, password, last_login, is_superuser, username, first_name, last_name, email, is_staff, is_active, date_joined) FROM stdin;
 2	pbkdf2_sha256$120000$O8y6xTbUDhUi$I7O4b3y2AfX8SgGTTcHRWPpgzA9a0scpICb0/8L8D0M=	2019-03-08 21:07:30.063612+03	t	belov_av			andrejbelo@gmail.com	t	t	2018-03-17 13:52:32.446838+03
-3	pbkdf2_sha256$870000$a9JrDpCIQS7YiDGfvlWQ4B$8fFez/b/0hLyzcH8tDBgt0/Hco/aRQ8oWXd9yRAxkAo=	\N	t	abelov			andrejbelo@yandex.ru	t	t	2024-12-05 17:27:27.795614+03
 \.
 
 
@@ -960,10 +944,6 @@ COPY public.django_migrations (id, app, name, applied) FROM stdin;
 18	core	0003_auto_20171014_0959	2017-10-14 10:00:00.845149+03
 19	core	0004_book_content	2017-10-14 11:47:12.950384+03
 20	core	0005_auto_20171014_1147	2017-10-14 11:47:25.635201+03
-21	admin	0003_logentry_add_action_flag_choices	2024-12-05 16:52:37.221143+03
-22	auth	0010_alter_group_name_max_length	2024-12-05 16:52:37.24004+03
-23	auth	0011_update_proxy_permissions	2024-12-05 16:52:37.246926+03
-24	auth	0012_alter_user_first_name_max_length	2024-12-05 16:52:37.25183+03
 \.
 
 
@@ -1008,7 +988,7 @@ SELECT pg_catalog.setval('public.auth_group_permissions_id_seq', 1, false);
 -- Name: auth_permission_id_seq; Type: SEQUENCE SET; Schema: public; Owner: radiopolka
 --
 
-SELECT pg_catalog.setval('public.auth_permission_id_seq', 52, true);
+SELECT pg_catalog.setval('public.auth_permission_id_seq', 39, true);
 
 
 --
@@ -1022,7 +1002,7 @@ SELECT pg_catalog.setval('public.auth_user_groups_id_seq', 1, false);
 -- Name: auth_user_id_seq; Type: SEQUENCE SET; Schema: public; Owner: radiopolka
 --
 
-SELECT pg_catalog.setval('public.auth_user_id_seq', 3, true);
+SELECT pg_catalog.setval('public.auth_user_id_seq', 2, true);
 
 
 --
@@ -1064,7 +1044,7 @@ SELECT pg_catalog.setval('public.django_content_type_id_seq', 13, true);
 -- Name: django_migrations_id_seq; Type: SEQUENCE SET; Schema: public; Owner: radiopolka
 --
 
-SELECT pg_catalog.setval('public.django_migrations_id_seq', 24, true);
+SELECT pg_catalog.setval('public.django_migrations_id_seq', 20, true);
 
 
 --
