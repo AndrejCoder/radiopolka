@@ -1,6 +1,7 @@
 from django.conf import settings
 from django.views.generic import TemplateView
 
+from linkexchange_django.context_processors import linkexchange
 from .api.book import BookApi
 from .api.category import CategoryApi
 from .dictionary import ALPHABET
@@ -26,6 +27,8 @@ class IndexView(BaseTemplateView):
 
         category_list = CategoryApi.list()
         book_list = BookApi.list()
+
+        context_data.update(linkexchange(self.request))
 
         context_data.update({
             'category_list': category_list,
@@ -54,6 +57,8 @@ class BooksByCategoryView(BaseTemplateView):
         category_list = CategoryApi.list()
         book_list = BookApi.list_by_category(slug)
 
+        context_data.update(linkexchange(self.request))
+
         context_data.update({
             'category_list': category_list,
             'book_list': book_list,
@@ -79,6 +84,8 @@ class BookDetailView(BaseTemplateView):
 
         category_list = CategoryApi.list()
         book_detail = BookApi.detail(slug)
+
+        context_data.update(linkexchange(self.request))
 
         context_data.update({
             'category_list': category_list,

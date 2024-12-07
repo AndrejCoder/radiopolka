@@ -9,8 +9,9 @@ https://docs.djangoproject.com/en/dev/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/dev/ref/settings/
 """
-
+import logging.config
 import os
+from os.path import dirname, join
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import conf
@@ -38,12 +39,14 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
+    'django.contrib.sites',
     'django.contrib.staticfiles',
     'django_extensions',
     'django_ckeditor_5',
     'core',
     'version',
-    'sape'
+    'linkexchange',
+    'linkexchange_django'
 ]
 
 MIDDLEWARE = [
@@ -83,6 +86,27 @@ TEMPLATES = [
         },
     },
 ]
+
+# START Linkexchange Settings
+LINKEXCHANGE_CONFIG = join(dirname(__file__), 'linkexchange.cfg')
+LINKEXCHANGE_OPTIONS = {'use_raw_links': False}
+LINKEXCHANGE_CLIENTS = (
+    ('sape', 'linkexchange.clients.sape.SapeClient'),
+    ('sape_context', 'linkexchange.clients.sape.SapeContextClient'),
+    ('sape_articles', 'linkexchange.clients.sape.SapeArticlesClient'),
+    ('linkfeed', 'linkexchange.clients.linkfeed.LinkFeedClient'),
+    ('trustlink', 'linkexchange.clients.trustlink.TrustLinkClient')
+)
+LINKEXCHANGE_MULTIHASH_DRIVERS = (
+    ('mem', 'linkexchange.db_drivers.MemMultiHashDriver'),
+    ('shelve', 'linkexchange.db_drivers.ShelveMultiHashDriver')
+)
+LINKEXCHANGE_FORMATTERS = (
+    ('inline', 'linkexchange.formatters.InlineFormatter'),
+    ('list', 'linkexchange.formatters.ListFormatter')
+)
+logging.config.fileConfig(join(dirname(__file__), 'logging.cfg'),{'basedir': BASE_DIR})
+# END Linkexchange Settings
 
 IMAGE_URL = "images/"
 BOOK_URL = "books/"

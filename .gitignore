@@ -1,3 +1,5 @@
 .idea/
 .venv/
 conf.py
+linkexchange.log
+sape-*.db
