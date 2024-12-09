@@ -7,3 +7,4 @@ django-ckeditor-5
 pip
 setuptools
 phpserialize
+gunicorn
