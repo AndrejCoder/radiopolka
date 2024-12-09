@@ -155,6 +155,7 @@ class MultiHashInFilesMixin:
         real_filename = self.get_filename(hashkey)
         lock_filename = self.get_lock_filename(real_filename)
         new_filename = self.get_new_filename(real_filename)
+        print('---------------------', new_filename)
         error = None
         loop_cnt = 0
 
