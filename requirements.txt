@@ -8,3 +8,4 @@ pip
 setuptools
 phpserialize
 gunicorn
+six
