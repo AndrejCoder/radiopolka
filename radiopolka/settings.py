@@ -272,26 +272,71 @@ DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
 
 LOGGING = {
     'version': 1,
-    'disable_existing_loggers': True,
+    'disable_existing_loggers': False,
+    'filters': {
+        'require_debug_false': {
+            '()': 'django.utils.log.RequireDebugFalse'
+        },
+        'require_debug_true': {
+            '()': 'django.utils.log.RequireDebugTrue'
+        }
+    },
     'formatters': {
-        'verbose': {
-            'format': '%(asctime)s %(levelname)s [%(name)s:%(lineno)s] %(module)s %(process)d %(thread)d %(message)s'
+        'main_formatter': {
+            'format': '%(levelname)s:%(name)s: %(message)s '
+                      '(%(asctime)s; %(filename)s:%(lineno)d)',
+            'datefmt': "%Y-%m-%d %H:%M:%S",
         }
     },
     'handlers': {
-        'gunicorn': {
+        'mail_admins': {
+            'filters': ['require_debug_false'],
+            'level': 'ERROR',
+            'class': 'django.utils.log.AdminEmailHandler'
+        },
+        'console': {
+            'filters': ['require_debug_true'],
+            'level': 'DEBUG',
+            'class': 'logging.StreamHandler',
+            'formatter': 'main_formatter',
+        },
+        'production_file': {
+            'filters': ['require_debug_false'],
+            'level': 'ERROR',
+            'class': 'logging.handlers.RotatingFileHandler',
+            'filename': os.path.join(conf.ROOT, '../logs/main.log'),
+            'maxBytes': 1024 * 1024 * 5,  # 5 MB
+            'backupCount': 7,
+            'formatter': 'main_formatter',
+        },
+        'debug_file': {
+            'filters': ['require_debug_true'],
             'level': 'DEBUG',
             'class': 'logging.handlers.RotatingFileHandler',
-            'formatter': 'verbose',
-            'filename': os.path.join(conf.ROOT, '../logs/radiopolka.log'),
-            'maxBytes': 1024 * 1024 * 100,  # 100 mb
+            'filename': os.path.join(conf.ROOT, '../logs/main_debug.log'),
+            'maxBytes': 1024 * 1024 * 5,  # 5 MB
+            'backupCount': 7,
+            'formatter': 'main_formatter',
+        },
+        'null': {
+            "class": 'logging.NullHandler',
         }
     },
     'loggers': {
-        'gunicorn.errors': {
-            'level': 'DEBUG',
-            'handlers': ['gunicorn'],
+        'django.request': {
+            'handlers': ['mail_admins', 'console'],
+            'level': 'ERROR',
             'propagate': True,
         },
+        'django': {
+            'handlers': ['null', ],
+        },
+        'py.warnings': {
+            'handlers': ['null', ],
+        },
+        '': {
+            'handlers': ['console', 'production_file', 'debug_file'],
+            'level': 'INFO',  # or 'CRITICAL','ERROR','WARN','WARNING','INFO','DEBUG','NOTSET'
+        }
     }
 }
