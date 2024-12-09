@@ -19,7 +19,7 @@
 # linking" as importing -- thus the LGPL applies to the contents of
 # the modules, but make no requirements on code importing these
 # modules.
-
+import logging
 import shelve
 import shutil
 import dbm
@@ -29,6 +29,9 @@ import os.path
 import select
 import threading
 import glob
+
+logger = logging.getLogger(__name__)
+
 
 class BaseMultiHashDriver(object):
     """
@@ -146,9 +149,9 @@ class MultiHashInFilesMixin:
     def get_file_mtime(self, hashkey):
         files = self.get_all_files(self.get_filename(hashkey))
         try:
-            return datetime.datetime.fromtimestamp(
-                    os.stat(files[0]).st_mtime)
-        except OSError:
+            return datetime.datetime.fromtimestamp(os.stat(files[0]).st_mtime)
+        except OSError as e:
+            logger.exception(e)
             raise KeyError(hashkey)
 
     def save_with_locking(self, hashkey, newhash, blocking, do_save):
