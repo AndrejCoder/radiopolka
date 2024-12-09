@@ -15,6 +15,7 @@ from os.path import dirname, join
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import conf
+import django_log_settings as log_settings
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -270,5 +271,27 @@ CKEDITOR_5_CONFIGS = {
 ADMIN_SITE_HEADER = "Администрирование сайта www.radiopolka.ru"
 DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
 
-SAPE_USER_UUID = 'c147e46648d8cbbe8d21a7bdd550415a'
-SAPE_SITE = 'radiopolka.ru'
+LOGGING = getattr(log_settings, 'LOGGING', {
+    # A sample logging configuration
+    'version': 1,
+    'disable_existing_loggers': False,
+    'filters': {
+        'require_debug_false': {
+            '()': 'django.utils.log.RequireDebugFalse'
+        }
+    },
+    'handlers': {
+        'mail_admins': {
+            'level': 'ERROR',
+            'filters': ['require_debug_false'],
+            'class': 'django.utils.log.AdminEmailHandler'
+        }
+    },
+    'loggers': {
+        'django.request': {
+            'handlers': ['mail_admins'],
+            'level': 'ERROR',
+            'propagate': True,
+        },
+    }
+})
