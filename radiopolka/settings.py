@@ -271,40 +271,27 @@ ADMIN_SITE_HEADER = "Администрирование сайта www.radiopolk
 DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
 
 LOGGING = {
-    "version": 1,
-    "disable_existing_loggers": False,
-    "root": {"level": "INFO", "handlers": ["file"]},
-    'filters': {
-        'require_debug_false': {
-            '()': 'django.utils.log.RequireDebugFalse'
-        },
-        'require_debug_true': {
-            '()': 'django.utils.log.RequireDebugTrue'
+    'version': 1,
+    'disable_existing_loggers': True,
+    'formatters': {
+        'verbose': {
+            'format': '%(asctime)s %(levelname)s [%(name)s:%(lineno)s] %(module)s %(process)d %(thread)d %(message)s'
         }
     },
-    'formatters': {
-        'main_formatter': {
-            'format': '%(levelname)s:%(name)s: %(message)s '
-                      '(%(asctime)s; %(filename)s:%(lineno)d)',
-            'datefmt': "%Y-%m-%d %H:%M:%S",
-        },
-    },
-    "handlers": {
-        'file': {
-            'filters': ['require_debug_false'],
-            'level': 'ERROR',
+    'handlers': {
+        'gunicorn': {
+            'level': 'DEBUG',
             'class': 'logging.handlers.RotatingFileHandler',
+            'formatter': 'verbose',
             'filename': os.path.join(conf.ROOT, '../logs/radiopolka.log'),
-            'maxBytes': 1024 * 1024 * 5,  # 5 MB
-            'backupCount': 7,
-            'formatter': 'main_formatter',
-        },
+            'maxBytes': 1024 * 1024 * 100,  # 100 mb
+        }
     },
-    "loggers": {
-        "django": {
-            "handlers": ["file"],
-            "level": "INFO",
-            "propagate": True
+    'loggers': {
+        'gunicorn.errors': {
+            'level': 'DEBUG',
+            'handlers': ['gunicorn'],
+            'propagate': True,
         },
     }
 }
