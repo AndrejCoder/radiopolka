@@ -4,8 +4,6 @@ jinja2
 django-mptt
 django-extensions
 django-ckeditor-5
-image
 pip
 setuptools
-olefile
 phpserialize

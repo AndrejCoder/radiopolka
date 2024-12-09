@@ -6,7 +6,7 @@ class BookApi:
 
     @classmethod
     def list(cls):
-        return Book.objects.all().order_by('-created_date')
+        return Book.objects.all().order_by('created_date')
 
     @classmethod
     def list_by_category(cls, slug):

@@ -45,6 +45,5 @@ def linkexchange(request):
 
     if support.options.get('use_raw_links', False):
         result['linkexchange_links'] = support.platform.get_raw_links(page_request)
-        print(result['linkexchange_links'])
 
     return result
