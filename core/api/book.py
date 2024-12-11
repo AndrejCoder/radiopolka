@@ -13,6 +13,10 @@ class BookApi:
         return cls.list().filter(category__slug=slug)
 
     @classmethod
+    def list_by_publisher(cls, slug):
+        return cls.list().filter(publisher__slug=slug)
+
+    @classmethod
     def list_by_alphabet(cls, letter):
         if letter == '0-9':
             _filter = {'name__regex': r'^\d'}
