@@ -346,6 +346,7 @@ class ShelveMultiHashDriver(MultiHashInFilesMixin, BaseMultiHashDriver):
             if hasattr(db, 'sync'):
                 db.sync()
             del db
+            logger.error(f'{filename} -------------')
             db = shelve.open(filename, 'w')
         else:
             db = shelve.open(filename, 'n')
@@ -353,6 +354,7 @@ class ShelveMultiHashDriver(MultiHashInFilesMixin, BaseMultiHashDriver):
 
     def save(self, hashkey, newhash, blocking=True):
         def do_save(real_filename, new_filename, newhash):
+            logger.error(f'////////////////// {real_filename} -> {new_filename} ({newhash})')
             if isinstance(newhash, dict):
                 newhash = list(newhash.items())
             db = self._db_init(new_filename)
