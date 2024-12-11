@@ -9,6 +9,7 @@
         <span style="font-size: 14px;"><a href="{{ url('books-by-category', args=[book_detail.category.slug]) }}"
                                           style="text-decoration: none;">{{ book_detail.category.name }}</a></span>
     </div>
+    <hr class="hr-title" />
     <img class="detail-img" src="{{ static([image_url, 'books/', book_detail.id, '_big.jpg']|join) }}"
          alt="{{ book_detail.author_str }} - {{ book_detail.name }}"
          title="{{ book_detail.author_str }} - {{ book_detail.name }}"
@@ -36,9 +37,12 @@
         <hr class="hr-title"/>
         <strong>Формат файла:</strong> {{ book_detail.file_format }}<br/>
         <strong>Размер файла:</strong> {{ book_detail.file_size }} МБ<br/>
-        <strong>Пароль к файлу:</strong> radiopolka.ru<br/><br/>
-        <a href="{{ static([book_url, book_detail.id, '-', book_detail.slug, '.zip']|join) }}" style="margin-left: 110px;">
-            <img src="{{ static([theme_image_url, 'download.png']|join) }}"/>
-        </a>
+        <strong>Пароль к файлу:</strong> radiopolka.ru
+        {% if book_detail.file_size != '-' %}
+            <br/><br/>
+            <a href="{{ static([book_url, book_detail.id, '-', book_detail.slug, '.zip']|join) }}" style="margin-left: 110px;">
+                <img src="{{ static([theme_image_url, 'download.png']|join) }}"/>
+            </a>
+        {% endif %}
     </div>
 {% endblock left_content %}
