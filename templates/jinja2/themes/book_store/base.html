@@ -48,12 +48,24 @@
             <div class="about"></div>
             <div class="right_box">
                 <div class="title"><span class="title_icon"><img
-                        src="{{ static([theme_image_url, 'bullet5.gif']|join) }}"
+                        src="{{ static([theme_image_url, 'bullet4.gif']|join) }}"
                         alt="" title=""/></span>Издательства
                 </div>
                 <ul class="list">
                     {% for publisher in publisher_list %}
                         <li><a href="{{ url('books-by-publisher', args=[publisher.slug]) }}">{{ publisher.name }}</a></li>
+                    {% endfor %}
+                </ul>
+            </div>
+            <div class="about"></div>
+            <div class="right_box">
+                <div class="title"><span class="title_icon"><img
+                        src="{{ static([theme_image_url, 'bullet3.gif']|join) }}"
+                        alt="" title=""/></span>Годы издания
+                </div>
+                <ul class="list">
+                    {% for book_year in book_year_list %}
+                        <li><a href="{{ url('books-by-year', args=[book_year.year]) }}">{{ book_year.year }}</a></li>
                     {% endfor %}
                 </ul>
             </div>

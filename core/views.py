@@ -24,6 +24,9 @@ class BaseTemplateView(TemplateView):
 
         publisher_list = PublisherApi.list()
         context_data['publisher_list'] = publisher_list
+
+        book_year_list = BookApi.list_years()
+        context_data['book_year_list'] = book_year_list
         return context_data
 
     def get_template_names(self):
@@ -43,7 +46,6 @@ class IndexView(BaseTemplateView):
             'title': 'Перечень книг',
             'tab_title': ''
         })
-
         return context_data
 
 
@@ -57,13 +59,13 @@ class BooksByCategoryView(BaseTemplateView):
 
         category = CategoryApi.by_pk(slug)
         book_list = BookApi.list_by_category(slug)
+        title = f'Перечень книг категории «{category.name}»'
 
         context_data.update({
             'book_list': book_list,
-            'title': 'Перечень книг категории «{0}»'.format(category.name),
-            'tab_title': 'Перечень книг категории «{0}»'.format(category.name)
+            'title': title,
+            'tab_title': title
         })
-
         return context_data
 
 
@@ -115,11 +117,30 @@ class BooksByPublisherView(BaseTemplateView):
         slug = kwargs.get('slug')
         publisher = PublisherApi.by_pk(slug)
         book_list = BookApi.list_by_publisher(slug)
+        title = f'Перечень книг издательства «{publisher.name}»'
 
         context_data.update({
             'book_list': book_list,
-            'title': f'Перечень книг издательства «{publisher.name}»',
-            'tab_title': f'Перечень книг издательства «{publisher.name}»'
+            'title': title,
+            'tab_title': title
         })
+        return context_data
 
+
+class BooksByYearView(BaseTemplateView):
+    template_file_name = 'index'
+
+    def get_context_data(self, **kwargs):
+        context_data = super().get_context_data(**kwargs)
+
+        year = kwargs.get('year')
+        book_list = BookApi.list_by_year(year)
+
+        title = f'Перечень книг {year} года издания'
+
+        context_data.update({
+            'book_list': book_list,
+            'title': title,
+            'tab_title': title
+        })
         return context_data
