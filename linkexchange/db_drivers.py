@@ -204,7 +204,7 @@ class MultiHashInFilesMixin:
             to_move = list(zip(self.get_all_files(new_filename),
                     self.get_all_files(real_filename)))
             for src, dest in to_move:
-                shutil.move(src, dest)
+                shutil.move(f'{src}.db', f'{dest}.db')
         finally:
             os.close(fd)
             os.unlink(lock_filename)
