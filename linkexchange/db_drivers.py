@@ -140,6 +140,7 @@ class MultiHashInFilesMixin:
         return [filename + s for s in self.suffix_list]
 
     def get_new_filename(self, real_filename):
+        logger.error(f'+++++++++++++++++ {real_filename}')
         basename, ext = os.path.splitext(real_filename)
         return basename + '.new' + ext
 
