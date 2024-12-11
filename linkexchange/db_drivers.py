@@ -135,6 +135,7 @@ class MultiHashInFilesMixin:
         return filename
 
     def get_all_files(self, filename):
+        logger.error(f'{self.suffix_list} ++++++++++++++')
         if not self.suffix_list:
             return [filename]
         return [filename + s for s in self.suffix_list]
