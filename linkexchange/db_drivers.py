@@ -30,6 +30,8 @@ import select
 import threading
 import glob
 
+from django.conf import settings
+
 logger = logging.getLogger(__name__)
 
 
@@ -206,7 +208,10 @@ class MultiHashInFilesMixin:
             to_move = list(zip(self.get_all_files(new_filename),
                     self.get_all_files(real_filename)))
             for src, dest in to_move:
-                shutil.move(f'{src}.db', f'{dest}.db')
+                if settings.DEBUG:
+                    shutil.move(src, dest)
+                else:
+                    shutil.move(f'{src}.db', f'{dest}.db')
         finally:
             os.close(fd)
             os.unlink(lock_filename)

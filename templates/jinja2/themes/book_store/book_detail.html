@@ -9,12 +9,12 @@
         <span style="font-size: 14px;"><a href="{{ url('books-by-category', args=[book_detail.category.slug]) }}"
                                           style="text-decoration: none;">{{ book_detail.category.name }}</a></span>
     </div>
+    <br/><br/><br/><br/>
     <hr class="hr-title" />
     <img class="detail-img" src="{{ static([image_url, 'books/', book_detail.id, '_big.jpg']|join) }}"
          alt="{{ book_detail.author_str }} - {{ book_detail.name }}"
          title="{{ book_detail.author_str }} - {{ book_detail.name }}"
          border="0"/>
-    <br/><br/><br/><br/><br/>
     <div class="detail-description">
         <strong>Автор:</strong> {{ book_detail.author_str }}<br/>
         <strong>Год издания:</strong> {{ book_detail.year }}<br/>
