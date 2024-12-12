@@ -65,6 +65,18 @@
             <div class="about"></div>
             <div class="right_box">
                 <div class="title"><span class="title_icon"><img
+                        src="{{ static([theme_image_url, 'bullet6.gif']|join) }}"
+                        alt="" title=""/></span>Авторы
+                </div>
+                <ul class="list">
+                    {% for author in author_list %}
+                        <li><a href="{{ url('books-by-author', args=[author.slug]) }}">{{ author.name }}</a></li>
+                    {% endfor %}
+                </ul>
+            </div>
+            <div class="about"></div>
+            <div class="right_box">
+                <div class="title"><span class="title_icon"><img
                         src="{{ static([theme_image_url, 'bullet4.gif']|join) }}"
                         alt="" title=""/></span>Издательства
                 </div>

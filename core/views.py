@@ -2,6 +2,7 @@ from django.conf import settings
 from django.views.generic import TemplateView
 
 from linkexchange_django.context_processors import linkexchange
+from .api.author import AuthorApi
 from .api.book import BookApi
 from .api.category import CategoryApi
 from .api.publisher import PublisherApi
@@ -15,18 +16,11 @@ class BaseTemplateView(TemplateView):
     def get_context_data(self, **kwargs):
         context_data = super().get_context_data(**kwargs)
         context_data.update(linkexchange(self.request))
-
-        category_list = CategoryApi.list()
-        context_data['category_list'] = category_list
-
-        alphabet_list = [{'key': k, 'value': v} for k, v in ALPHABET.items()]
-        context_data['alphabet_list'] = alphabet_list
-
-        publisher_list = PublisherApi.list()
-        context_data['publisher_list'] = publisher_list
-
-        book_year_list = BookApi.list_years()
-        context_data['book_year_list'] = book_year_list
+        context_data['alphabet_list'] = [{'key': k, 'value': v} for k, v in ALPHABET.items()]
+        context_data['category_list'] = CategoryApi.list()
+        context_data['author_list'] = AuthorApi.list()
+        context_data['publisher_list'] = PublisherApi.list()
+        context_data['book_year_list'] = BookApi.list_years()
         return context_data
 
     def get_template_names(self):
@@ -137,6 +131,26 @@ class BooksByYearView(BaseTemplateView):
         book_list = BookApi.list_by_year(year)
 
         title = f'Перечень книг {year} года издания'
+
+        context_data.update({
+            'book_list': book_list,
+            'title': title,
+            'tab_title': title
+        })
+        return context_data
+
+
+class BooksByAuthorView(BaseTemplateView):
+    template_file_name = 'index'
+
+    def get_context_data(self, **kwargs):
+        context_data = super().get_context_data(**kwargs)
+
+        slug = kwargs.get('slug')
+        author = AuthorApi.by_pk(slug)
+        book_list = BookApi.list_by_author(slug)
+
+        title = f'Перечень книг автора {author}'
 
         context_data.update({
             'book_list': book_list,

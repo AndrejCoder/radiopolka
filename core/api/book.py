@@ -25,6 +25,10 @@ class BookApi:
         return cls.list().order_by('-year').distinct('year')
 
     @classmethod
+    def list_by_author(cls, slug):
+        return cls.list().filter(author__slug=slug)
+
+    @classmethod
     def list_by_alphabet(cls, letter):
         if letter == '0-9':
             _filter = {'name__regex': r'^\d'}

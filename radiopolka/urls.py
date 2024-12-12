@@ -24,6 +24,7 @@ urlpatterns = [
     re_path(r'^$', IndexView.as_view(), name='index'),
     re_path(r'^ckeditor/', include('django_ckeditor_5.urls')),
     re_path(r'^category/', include('core.category_urls'), name='category'),
+    re_path(r'^author/', include('core.author_urls'), name='author'),
     re_path(r'^publisher/', include('core.publisher_urls'), name='publisher'),
     re_path(r'^year/', include('core.year_urls'), name='year'),
     re_path(r'^book/', include('core.book_urls'), name='book')
