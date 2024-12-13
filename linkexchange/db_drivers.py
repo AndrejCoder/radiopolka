@@ -355,6 +355,9 @@ class ShelveMultiHashDriver(MultiHashInFilesMixin, BaseMultiHashDriver):
         if self.db_module:
             # if appropriate db module is specified, use it to create empty
             # database
+            logger.error(self.db_module.__name__)
+            logger.error(self.db_module.__path__)
+            logger.error(f'{filename} 111-------------')
             db = self.db_module.open(filename, 'n')
             if hasattr(db, 'sync'):
                 db.sync()

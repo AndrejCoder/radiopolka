@@ -20,23 +20,22 @@
 # the modules, but make no requirements on code importing these
 # modules.
 
+import datetime
+import html.parser
+import io
+import logging
+import mimetypes
 import os
 import random
-import urllib.request, urllib.parse, urllib.error
-import urllib.request, urllib.error, urllib.parse
-import urllib.parse
-import datetime
 import re
-import xml.sax
-import xml.sax.saxutils
+import tempfile
+import urllib.error
+import urllib.parse
+import urllib.request
 import xml.dom
 import xml.dom.pulldom
-import io
-import html.parser
-import tempfile
-import logging
-
-import mimetypes
+import xml.sax
+import xml.sax.saxutils
 
 from django.conf import settings
 
@@ -418,6 +417,7 @@ class SapeClient(SapeLikeClient):
             return parse_xml(xml.dom.pulldom.parse(source))
         return super(SapeClient, self).parse_data(source, url, format)
 
+
 class ContextLinksGenerator(html.parser.HTMLParser):
     def __init__(self, out, links,
             is_fragment, show_code, new_url_code,
@@ -432,9 +432,8 @@ class ContextLinksGenerator(html.parser.HTMLParser):
         self.show_code = show_code
         self.new_url_code = new_url_code
         self.force_body_sape_index = force_body_sape_index
-        self.exclude_tags = (exclude_tags or set()) | set(['a',
-            'textarea', 'select', 'script', 'style',
-            'label', 'noscript' , 'noindex', 'button'])
+        self.exclude_tags = (exclude_tags or set()) | {'a', 'textarea', 'select', 'script', 'style', 'label',
+                                                       'noscript', 'noindex', 'button'}
         self.exclude_ctx = []
         self.include_tags = include_tags or set()
         self.include_ctx = []
@@ -544,11 +543,11 @@ class SapeContextClient(SapeClient):
         include_tags = set()
         if self.start_doc_re.match(content):
             is_fragment = False
-            include_tags = set(['body'])
+            include_tags = {'body'}
             if '<sape_index>' not in content:
                 force_body_sape_index = True
             else:
-                include_tags |= set(['sape_index'])
+                include_tags |= {'sape_index'}
         else:
             is_fragment = True
             content = '<html><body>%s</body></html>' % content
@@ -576,7 +575,7 @@ class ArticleTemplateLinksCutter(html.parser.HTMLParser):
         self.out = out
         self.char_buf = []
         self.allowed_domains = allowed_domains
-        self.exclude_tags = set(['script', 'noindex'])
+        self.exclude_tags = {'script', 'noindex'}
         self.exclude_ctx = []
         self.anchor_needs_noindex = []
 
