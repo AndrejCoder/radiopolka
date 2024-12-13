@@ -131,7 +131,7 @@ class MultiHashInFilesMixin:
         if callable(filename):
             filename = filename(hashkey)
         elif 'XXX' in filename:
-            logger.error(f'XXX -------------- {hashkey}')
+            logger.error(f'XXX -------------- {hashkey} / {filename}')
             filename = filename.replace('XXX', hashkey)
         else:
             filename += hashkey
