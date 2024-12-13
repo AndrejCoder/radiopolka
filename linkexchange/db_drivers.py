@@ -141,6 +141,7 @@ class MultiHashInFilesMixin:
         logger.error(f'{self.suffix_list} ++++++++++++++')
         if not self.suffix_list:
             return [filename]
+        logger.error('Errrrrrrorrrr')
         return [filename + s for s in self.suffix_list]
 
     def get_new_filename(self, real_filename):
@@ -207,8 +208,7 @@ class MultiHashInFilesMixin:
             # data is not completely written
             logger.error(f'!!!!!!!!!!!!!!!!!!! {new_filename}')
             do_save(real_filename, new_filename, newhash)
-            to_move = list(zip(self.get_all_files(new_filename),
-                    self.get_all_files(real_filename)))
+            to_move = list(zip(self.get_all_files(new_filename), self.get_all_files(real_filename)))
             for src, dest in to_move:
                 if settings.DEBUG:
                     shutil.move(src, dest)
