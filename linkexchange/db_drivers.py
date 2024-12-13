@@ -109,8 +109,7 @@ class MultiHashInFilesMixin:
     """
     Mixin class for multihash drivers that use files to store hash objects.
     """
-    def __init__(self, filename, max_lock_time=None, no_excl=False,
-            suffix_list=None):
+    def __init__(self, filename, max_lock_time=None, no_excl=False, suffix_list=None):
         """
         @param filename: file name to use for hash files (string or callable)
         @param max_lock_time: maximum lock time in seconds or as
@@ -377,6 +376,7 @@ class ShelveMultiHashDriver(MultiHashInFilesMixin, BaseMultiHashDriver):
 
     def modify(self, hashkey, otherhash, blocking=True):
         def do_modify(real_filename, new_filename, newhash):
+            logger.error(f'modify ////////////////// {real_filename} -> {new_filename} ({newhash})')
             if isinstance(newhash, dict):
                 newhash = list(newhash.items())
             try:
@@ -408,6 +408,7 @@ class ShelveMultiHashDriver(MultiHashInFilesMixin, BaseMultiHashDriver):
                 db.pop(k, None)
             db.sync()
         return self.save_with_locking(hashkey, keys, blocking, do_delete)
+
 
 if __name__ == "__main__":
     import doctest
