@@ -324,6 +324,7 @@ class ShelveMultiHashDriver(MultiHashInFilesMixin, BaseMultiHashDriver):
         elif not db_module:
             for mn in ('gdbm', 'dbm', 'dumbdbm'):
                 try:
+                    logger.error(f'db module {mn}')
                     db_module = __import__(mn)
                 except ImportError:
                     pass
