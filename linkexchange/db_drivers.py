@@ -19,18 +19,16 @@
 # linking" as importing -- thus the LGPL applies to the contents of
 # the modules, but make no requirements on code importing these
 # modules.
-import logging
-import shelve
-import shutil
-import dbm
 import datetime
+import dbm
+import glob
+import logging
 import os
 import os.path
 import select
+import shelve
+import shutil
 import threading
-import glob
-
-from django.conf import settings
 
 logger = logging.getLogger(__name__)
 
@@ -130,21 +128,17 @@ class MultiHashInFilesMixin:
         if callable(filename):
             filename = filename(hashkey)
         elif 'XXX' in filename:
-            logger.error(f'XXX -------------- {hashkey} / {filename}')
             filename = filename.replace('XXX', hashkey)
         else:
             filename += hashkey
         return filename
 
     def get_all_files(self, filename):
-        logger.error(f'{self.suffix_list} ++++++++++++++')
         if not self.suffix_list:
             return [filename]
-        logger.error('Errrrrrrorrrr')
         return [filename + s for s in self.suffix_list]
 
     def get_new_filename(self, real_filename):
-        logger.error(f'+++++++++++++++++ {real_filename}')
         basename, ext = os.path.splitext(real_filename)
         return basename + '.new' + ext
 
@@ -154,11 +148,7 @@ class MultiHashInFilesMixin:
     def get_file_mtime(self, hashkey):
         files = self.get_all_files(self.get_filename(hashkey))
         try:
-            if settings.DEBUG:
-                f = files[0]
-            else:
-                f = f'{files[0]}.db'
-            return datetime.datetime.fromtimestamp(os.stat(f).st_mtime)
+            return datetime.datetime.fromtimestamp(os.stat(files[0]).st_mtime)
         except OSError as e:
             logger.exception(e)
             raise KeyError(hashkey)
@@ -209,14 +199,10 @@ class MultiHashInFilesMixin:
             # save data to newly created file, then just move it to the real
             # file, so that other precesses/threads can read old data while new
             # data is not completely written
-            logger.error(f'!!!!!!!!!!!!!!!!!!! {new_filename}')
             do_save(real_filename, new_filename, newhash)
             to_move = list(zip(self.get_all_files(new_filename), self.get_all_files(real_filename)))
             for src, dest in to_move:
-                if settings.DEBUG:
-                    shutil.move(src, dest)
-                else:
-                    shutil.move(f'{src}.db', f'{dest}.db')
+                shutil.move(src, dest)
         finally:
             os.close(fd)
             os.unlink(lock_filename)
@@ -324,12 +310,10 @@ class ShelveMultiHashDriver(MultiHashInFilesMixin, BaseMultiHashDriver):
         elif not db_module:
             for mn in ('gdbm', 'dbm', 'dumbdbm'):
                 try:
-                    logger.error(f'db module {mn}')
                     db_module = __import__(mn)
                 except ImportError:
                     pass
                 else:
-                    logger.error(f'--db module {mn}')
                     break
         self.db_module = db_module
         if self.db_module and not self.suffix_list:
@@ -355,23 +339,17 @@ class ShelveMultiHashDriver(MultiHashInFilesMixin, BaseMultiHashDriver):
         if self.db_module:
             # if appropriate db module is specified, use it to create empty
             # database
-            logger.error(self.db_module.__name__)
-            logger.error(self.db_module.__path__)
-            logger.error(f'{filename} 111-------------')
             db = self.db_module.open(filename, 'n')
             if hasattr(db, 'sync'):
                 db.sync()
             del db
-            logger.error(f'{filename} -------------')
             db = shelve.open(filename, 'w')
         else:
-            logger.error(f'{filename} 33333 -------------')
             db = shelve.open(filename, 'n')
         return db
 
     def save(self, hashkey, newhash, blocking=True):
         def do_save(real_filename, new_filename, newhash):
-            logger.error(f'////////////////// {real_filename} -> {new_filename} ({newhash})')
             if isinstance(newhash, dict):
                 newhash = list(newhash.items())
             db = self._db_init(new_filename)
@@ -382,7 +360,6 @@ class ShelveMultiHashDriver(MultiHashInFilesMixin, BaseMultiHashDriver):
 
     def modify(self, hashkey, otherhash, blocking=True):
         def do_modify(real_filename, new_filename, newhash):
-            logger.error(f'modify ////////////////// {real_filename} -> {new_filename} ({newhash})')
             if isinstance(newhash, dict):
                 newhash = list(newhash.items())
             try:
