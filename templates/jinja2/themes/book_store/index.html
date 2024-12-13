@@ -36,7 +36,9 @@
                         <strong>Автор:</strong> {{ book.author_str }}<br/>
                         <strong>Год издания:</strong> {{ book.year }}<br/>
                         <strong>Издательство:</strong> {{ book.publisher.name }}<br/>
-                        <strong>Оригин. название:</strong> {{ book.origin_name }}<br/>
+                        {% if book.origin_name %}
+                            <strong>Оригин. название:</strong> {{ book.origin_name }}<br/>
+                        {% endif %}
                         <hr class="hr-title"/>
                         {{ book.description_small|safe }}
                     </div>

@@ -23,7 +23,9 @@
         {% if book_detail.series %}
             <strong>Серия:</strong> {{ book_detail.series }}<br/>
         {% endif %}
-        <strong>Формат издания:</strong> {{ book_detail.format }}<br/>
+        {% if book_detail.format %}
+            <strong>Формат издания:</strong> {{ book_detail.format }}<br/>
+        {% endif %}
         <strong>Тип издания:</strong> {{ book_detail.type.name }}<br/>
         <strong>Страниц:</strong> {{ book_detail.pages }}<br/>
         <strong>Вес:</strong> {{ book_detail.weight }} г.<br/>
