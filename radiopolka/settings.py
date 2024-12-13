@@ -98,7 +98,8 @@ LINKEXCHANGE_CLIENTS = (
 )
 LINKEXCHANGE_MULTIHASH_DRIVERS = (
     ('mem', 'linkexchange.db_drivers.MemMultiHashDriver'),
-    ('shelve', 'linkexchange.db_drivers.ShelveMultiHashDriver')
+    ('shelve', 'linkexchange.db_drivers.ShelveMultiHashDriver'),
+    ('django', 'linkexchange_django.db_drivers.DjangoMultiHashDriver')
 )
 LINKEXCHANGE_FORMATTERS = (
     ('inline', 'linkexchange.formatters.InlineFormatter'),

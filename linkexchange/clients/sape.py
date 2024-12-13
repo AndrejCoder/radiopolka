@@ -145,8 +145,7 @@ class SapeLikeClient(BaseClient):
             try:
                 refresh_after = data['__error_time__'] + reloadtime
             except KeyError:
-                refresh_after = (db_driver.get_mtime(host) +
-                        self.db_lifetime)
+                refresh_after = (db_driver.get_mtime(host) + self.db_lifetime)
             if refresh_after <= datetime.datetime.now():
                 log.debug("The database too old, refreshing")
                 force_refresh = True

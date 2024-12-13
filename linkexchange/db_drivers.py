@@ -155,7 +155,11 @@ class MultiHashInFilesMixin:
     def get_file_mtime(self, hashkey):
         files = self.get_all_files(self.get_filename(hashkey))
         try:
-            return datetime.datetime.fromtimestamp(os.stat(files[0]).st_mtime)
+            if settings.DEBUG:
+                f = files[0]
+            else:
+                f = f'{files[0]}.db'
+            return datetime.datetime.fromtimestamp(os.stat(f).st_mtime)
         except OSError as e:
             logger.exception(e)
             raise KeyError(hashkey)
