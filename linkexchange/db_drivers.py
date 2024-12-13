@@ -360,6 +360,7 @@ class ShelveMultiHashDriver(MultiHashInFilesMixin, BaseMultiHashDriver):
             logger.error(f'{filename} -------------')
             db = shelve.open(filename, 'w')
         else:
+            logger.error(f'{filename} 33333 -------------')
             db = shelve.open(filename, 'n')
         return db
 
