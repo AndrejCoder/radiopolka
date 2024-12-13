@@ -19,7 +19,9 @@
         <strong>Автор:</strong> {{ book_detail.author_str }}<br/>
         <strong>Год издания:</strong> {{ book_detail.year }}<br/>
         <strong>Издательство:</strong> {{ book_detail.publisher.name }}<br/>
-        <strong>Оригин. название:</strong> {{ book_detail.origin_name }}<br/>
+        {% if book_detail.origin_name %}
+            <strong>Оригин. название:</strong> {{ book_detail.origin_name }}<br/>
+        {% endif %}
         {% if book_detail.series %}
             <strong>Серия:</strong> {{ book_detail.series }}<br/>
         {% endif %}
@@ -37,10 +39,10 @@
         <hr class="hr-title"/>
         {{ book_detail.description_big|safe }}
         {% if book_detail.file_size != '-' %}
-        <hr class="hr-title"/>
-        <strong>Формат файла:</strong> {{ book_detail.file_format }}<br/>
-        <strong>Размер файла:</strong> {{ book_detail.file_size }} МБ<br/>
-        <strong>Пароль к файлу:</strong> radiopolka.ru
+            <hr class="hr-title"/>
+            <strong>Формат файла:</strong> {{ book_detail.file_format }}<br/>
+            <strong>Размер файла:</strong> {{ book_detail.file_size }} МБ<br/>
+            <strong>Пароль к файлу:</strong> radiopolka.ru
             <br/><br/>
             <a href="{{ static([book_url, book_detail.id, '-', book_detail.slug, '.zip']|join) }}" style="margin-left: 110px;">
                 <img src="{{ static([theme_image_url, 'download.png']|join) }}"/>
