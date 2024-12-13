@@ -329,6 +329,7 @@ class ShelveMultiHashDriver(MultiHashInFilesMixin, BaseMultiHashDriver):
                 except ImportError:
                     pass
                 else:
+                    logger.error(f'--db module {mn}')
                     break
         self.db_module = db_module
         if self.db_module and not self.suffix_list:
