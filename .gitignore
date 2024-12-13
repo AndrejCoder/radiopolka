@@ -3,3 +3,4 @@
 conf.py
 linkexchange.log
 sape-*.db
+gc-*.log

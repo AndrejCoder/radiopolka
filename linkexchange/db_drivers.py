@@ -131,6 +131,7 @@ class MultiHashInFilesMixin:
         if callable(filename):
             filename = filename(hashkey)
         elif 'XXX' in filename:
+            logger.error('XXX --------------')
             filename = filename.replace('XXX', hashkey)
         else:
             filename += hashkey
@@ -204,6 +205,7 @@ class MultiHashInFilesMixin:
             # save data to newly created file, then just move it to the real
             # file, so that other precesses/threads can read old data while new
             # data is not completely written
+            logger.error(f'!!!!!!!!!!!!!!!!!!! {new_filename}')
             do_save(real_filename, new_filename, newhash)
             to_move = list(zip(self.get_all_files(new_filename),
                     self.get_all_files(real_filename)))
